@@ -1,0 +1,30 @@
+﻿{
+    "Form-formDeleteMessageBoxText": "-Do you really want to delete this item?",
+    "Form-formDeleteManyMessageBoxText":"-Do you really want to delete the selected items?",
+    "Form-formDeleteMessageBoxTitle":"-Deleting",
+    "Form-mainExitMessageBoxText":"-Exit this application?",
+    "Form-mainExitMessageBoxTitle":"-Exit",
+    "Form-aboutVersion":"-Version: ",
+    "Form-errorsShowDetailsButton":"-\u003e Show Details",
+    "Form-errorsHideDetailsButton":"-\u003c Hide Details",
+    "Form-errorsCancelButton":"-Cancel",
+    "Form-errorsContinueButton":"-Continue",
+    "Form-errorsOKButton":"-OK",
+    "Form-errorsTitle":"-Errors",
+    "Form-errorsInfoLabel": "-Errors encountered while performing this operation.",
+
+    "Text-MessageBoxSample-text001":"-Test.",
+    "Form-FormMain-blogsToolStripMenuItem":"-Blogs",
+    "Form-FormPosts-FormPosts":"-FormPosts",
+    "Form-FormPosts-titleDataGridViewTextBoxColumn":"-title",
+    "Form-FormPosts-button_tabPosts_new":"-New",
+    "Form-FormPosts-text001": "-Test text 01.",
+    
+    "DataModel-foreingKeyErrorRaised":"-Foreing keys constraint raised on: \"{0}\"",
+    "DataModel-Blogs-blogRepositoryE001":"Blog title can not be null or empty.",
+    "DataModel-Blogs-blogRepositoryE002":"Blog already inserted.",
+    "DataModel-Posts-postRepositoryE001":"-A Blog must be selected.",
+    "DataModel-Posts-postRepositoryE002":"-Post title could not be empty.",
+    "DataModel-Posts-postRepositoryE003":"-Post already inserted.",
+    "DataModel-Posts-foreingKeyErrorRaised":"-2Foreing keys constraint raised on: \"{0}\""
+}

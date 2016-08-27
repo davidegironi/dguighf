@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGUIGHF", "DGUIGHF\DGUIGHF.csproj", "{F72E8957-E3BC-4C3C-8B53-379998F44DE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGUIGHFSampleModel", "DGUIGHFSampleModel\DGUIGHFSampleModel.csproj", "{A4E05E50-CE21-4155-B753-695011FAA326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGUIGHFSample", "DGUIGHFSample\DGUIGHFSample.csproj", "{D16C21AC-CC04-4AF4-9870-0847B9D7DDB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F72E8957-E3BC-4C3C-8B53-379998F44DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72E8957-E3BC-4C3C-8B53-379998F44DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72E8957-E3BC-4C3C-8B53-379998F44DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72E8957-E3BC-4C3C-8B53-379998F44DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E05E50-CE21-4155-B753-695011FAA326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E05E50-CE21-4155-B753-695011FAA326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E05E50-CE21-4155-B753-695011FAA326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E05E50-CE21-4155-B753-695011FAA326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D16C21AC-CC04-4AF4-9870-0847B9D7DDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16C21AC-CC04-4AF4-9870-0847B9D7DDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16C21AC-CC04-4AF4-9870-0847B9D7DDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16C21AC-CC04-4AF4-9870-0847B9D7DDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
