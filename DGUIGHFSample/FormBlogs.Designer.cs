@@ -129,8 +129,6 @@
             this.vBlogsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel_filters = new System.Windows.Forms.Panel();
             this.button_reloadview = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             blogs_titleLabel = new System.Windows.Forms.Label();
             blogs_descriptionLabel = new System.Windows.Forms.Label();
             posts_titleLabel = new System.Windows.Forms.Label();
@@ -184,7 +182,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_list)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vBlogsBindingSource)).BeginInit();
             this.panel_filters.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // blogs_titleLabel
@@ -349,7 +346,6 @@
             // 
             // panel_tabBlogs_data
             // 
-            this.panel_tabBlogs_data.Controls.Add(this.panel3);
             this.panel_tabBlogs_data.Controls.Add(blogs_dateLabel);
             this.panel_tabBlogs_data.Controls.Add(this.blogs_dateDateTimePicker);
             this.panel_tabBlogs_data.Controls.Add(blogs_descriptionLabel);
@@ -1106,22 +1102,6 @@
             this.button_reloadview.UseVisualStyleBackColor = true;
             this.button_reloadview.Click += new System.EventHandler(this.button_reloadview_Click);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.textBox1);
-            this.panel3.Location = new System.Drawing.Point(223, 120);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 32);
-            this.panel3.TabIndex = 7;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(21, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "test";
-            // 
             // FormBlogs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1180,8 +1160,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_list)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vBlogsBindingSource)).EndInit();
             this.panel_filters.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1272,7 +1250,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn commentsusefulidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentsidDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn pointsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
