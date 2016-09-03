@@ -105,6 +105,7 @@ namespace DG.UIGHFSample
             return DGDataTableUtils.ToDataTable<VTags>(vTags);
         }
 
+
         #region tabTags
 
         private object GetDataSourceEdit_tabTags()
