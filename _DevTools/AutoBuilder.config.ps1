@@ -6,7 +6,7 @@ $solutionName = "DGUIGHF"
 $versionMajor = "1"
 $versionMinor = "2"
 $versionBuild = GetVersionBuild
-$versionRevision = "4"
+$versionRevision = "5"
 #build version number
 $assemblyVersion = GetVersion $versionMajor $versionMinor $versionBuild $versionRevision
 $fileVersion = $assemblyVersion

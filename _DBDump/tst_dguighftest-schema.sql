@@ -7,7 +7,7 @@ CREATE DATABASE [tst_dguighftest]
  ON  PRIMARY 
 ( NAME = N'tst_abuighftest', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\tst_dguighftest.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'tst_abuighftest_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\tst_dguighftest_1.ldf' , SIZE = 4224KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'tst_abuighftest_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\tst_dguighftest_1.ldf' , SIZE = 4672KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
  COLLATE Latin1_General_CI_AS
 END;
 ALTER DATABASE [tst_dguighftest] SET COMPATIBILITY_LEVEL = 100;

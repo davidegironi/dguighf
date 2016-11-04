@@ -9,7 +9,7 @@ About
 
 ## Requirements
 
-* Microsoft Windows with .NET framework 4.5 or more
+* Microsoft Windows with .NET framework 4.5 or later
 
 ## Development
 
