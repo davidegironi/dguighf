@@ -22,6 +22,16 @@ namespace DG.UI.GHF
         private bool m_forceFormReload = false;
 
         /// <summary>
+        /// Forces the reload for this form is disabled
+        /// </summary>
+        private bool m_forceFormReloadArmingDisabled = false;
+
+        /// <summary>
+        /// Reload this form when it becames active
+        /// </summary>
+        protected bool ReloadFormOnActive = true;
+
+        /// <summary>
         /// Check if the form is loaded for the first time
         /// </summary>
         protected bool IsFirstLoad = false;
@@ -886,7 +896,8 @@ namespace DG.UI.GHF
             //reload on form activation
             if (m_forceFormReload)
             {
-                this.OnLoad(e);
+                if (ReloadFormOnActive && !UIGHFApplication.IsEditing)
+                    this.OnLoad(e);
                 m_forceFormReload = false;
             }
         }
@@ -899,7 +910,9 @@ namespace DG.UI.GHF
         private void Form_Deactivate(object sender, EventArgs e)
         {
             //arm reload on form activation
-            m_forceFormReload = true;
+            if (!m_forceFormReloadArmingDisabled)
+                m_forceFormReload = true;
+            m_forceFormReloadArmingDisabled = false;
         }
 
         /// <summary>
@@ -1621,6 +1634,7 @@ namespace DG.UI.GHF
 
             if (elselected)
             {
+                m_forceFormReloadArmingDisabled = true;
                 if (MessageBox.Show((elselecteditems != null && elselecteditems.Count() > 1 ? languageBase.formDeleteManyMessageBoxText : languageBase.formDeleteMessageBoxText), languageBase.formDeleteMessageBoxTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     if (elselecteditems != null && elselecteditems.Count() > 1)
@@ -1982,7 +1996,10 @@ namespace DG.UI.GHF
             }
             else if (action == EditingMode.D || action == EditingMode.R || action == EditingMode.childD || action == EditingMode.childR)
             {
-                UIGHFApplication.IsEditing = false;
+                if (action == EditingMode.D || action == EditingMode.childD)
+                    UIGHFApplication.IsEditing = true;
+                else
+                    UIGHFApplication.IsEditing = false;
 
                 foreach (TabPage tabPage in TabControlMain.TabPages)
                 {
