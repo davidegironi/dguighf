@@ -1691,6 +1691,8 @@ namespace DG.UI.GHF
                         SetEditingModeTab(tabElement, EditingMode.D);
 
                         SaveClick(tabElement, displayAlertOnError);
+
+                        SetEditingModeTab(tabElement, EditingMode.R);
                     }
 
                     return true;

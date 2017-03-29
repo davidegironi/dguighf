@@ -37,7 +37,7 @@ namespace DG.UI.GHF
                 else if (!String.IsNullOrEmpty(exceptionTrace))
                     throw new DataException(exceptionTrace);
                 else
-                    throw new ArgumentException(String.Join("Unknown error happened.\n", errors));
+                    throw new ArgumentException("Unknown error happened.\n");
             }
         }
 
@@ -62,7 +62,7 @@ namespace DG.UI.GHF
                 else if (!String.IsNullOrEmpty(exceptionTrace))
                     throw new DataException(exceptionTrace);
                 else
-                    throw new ArgumentException(String.Join("Unknown error happened.\n", errors));
+                    throw new ArgumentException("Unknown error happened.\n");
             }
         }
 
@@ -89,7 +89,7 @@ namespace DG.UI.GHF
                 else if (!String.IsNullOrEmpty(exceptionTrace))
                     throw new DataException(exceptionTrace);
                 else
-                    throw new ArgumentException(String.Join("Unknown error happened.\n", errors));
+                    throw new ArgumentException("Unknown error happened.\n");
             }
         }
 
