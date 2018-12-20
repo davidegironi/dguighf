@@ -5,6 +5,7 @@
 #endregion
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DG.UI.GHF
@@ -196,6 +197,127 @@ namespace DG.UI.GHF
         public void CloseAllForms(object s)
         {
             CloseAllForms(s, CheckIsEditing);
+        }
+
+        /// <summary>
+        /// Menu item Fit All forms click
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="checkIsEditing"></param>
+        public void FitAllForms(object s, bool checkIsEditing)
+        {
+            if (UIGHFApplication == null)
+                return;
+
+            if (checkIsEditing && UIGHFApplication.IsEditing)
+                return;
+
+            //get max value for minimum width and height
+            int maxminWidth = 300;
+            int maxminHeight = 300;
+            foreach (Form fa in (s as Form).MdiChildren)
+            {
+                if (fa.MinimumSize.Height > maxminHeight)
+                    maxminHeight = fa.MinimumSize.Height;
+                if (fa.MinimumSize.Width > maxminWidth)
+                    maxminWidth = fa.MinimumSize.Width;
+            }
+
+            //get actual width and height
+            int width = (s as Form).ClientRectangle.Width;
+            int height = (s as Form).ClientRectangle.Height;
+            foreach (Control c in (s as Form).Controls)
+            {
+                if (c as MdiClient != null)
+                {
+                    width = c.ClientSize.Width;
+                    height = c.ClientSize.Height;
+                    break;
+                }
+            }
+
+            //check how many forms fit the parent, and fit that in lines
+            int widthSplit = (int)Math.Floor((decimal)width / (decimal)maxminWidth);
+            int heightSplit = (int)Math.Floor((decimal)height / (decimal)maxminHeight);
+            if ((s as Form).MdiChildren.Length < widthSplit * heightSplit)
+            {
+                if ((s as Form).MdiChildren.Length < widthSplit)
+                {
+                    widthSplit = (s as Form).MdiChildren.Length;
+                    heightSplit = 1;
+                }
+                else
+                    heightSplit = (int)Math.Ceiling((decimal)(s as Form).MdiChildren.Length / (decimal)widthSplit);
+            }
+            if (widthSplit == 0)
+                widthSplit = 1;
+            if (heightSplit == 0)
+                heightSplit = 1;
+
+            //get the width for forms
+            int widthSel = maxminWidth + (int)Math.Floor(((decimal)width - ((decimal)widthSplit * (decimal)maxminWidth)) / (decimal)widthSplit);
+            int heightSel = maxminHeight + (int)Math.Floor(((decimal)height - ((decimal)heightSplit * (decimal)maxminHeight)) / (decimal)heightSplit);
+
+            //iterate and set forms size
+            int x = 0;
+            int y = 0;
+            int xcount = 0;
+            int ycount = 0;
+            bool minimizeform = false;
+            for (int i = (s as Form).MdiChildren.Length - 1; i >= 0; i--)
+            {
+                Form fa = (s as Form).MdiChildren[i];
+
+                //reset forms states
+                fa.WindowState = FormWindowState.Normal;
+
+                if (minimizeform)
+                {
+                    fa.WindowState = FormWindowState.Minimized;
+                }
+                else
+                {
+                    //set size and location
+                    fa.Size = new Size(widthSel, heightSel);
+                    fa.Location = new Point(x, y);
+
+                    //fill by line
+                    x += widthSel;
+
+                    xcount++;
+                    if (xcount >= widthSplit)
+                    {
+                        xcount = 0;
+                        ycount++;
+                        x = 0;
+                        y += heightSel;
+
+                        //rebuild width for the last line
+                        if (ycount + 1 == heightSplit)
+                        {
+                            if ((s as Form).MdiChildren.Length < widthSplit * heightSplit)
+                            {
+                                int lastlinenum = (s as Form).MdiChildren.Length - (widthSplit * ycount);
+                                widthSel = maxminWidth + (int)Math.Floor(((decimal)width - ((decimal)lastlinenum * (decimal)maxminWidth)) / (decimal)lastlinenum);
+                            }
+                        }
+                    }
+
+                    if (ycount >= heightSplit)
+                    {
+                        minimizeform = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Menu item Fit All forms click, use default value to check Editing Mode
+        /// </summary>
+        /// <param name="s"></param>
+        public void FitAllForms(object s)
+        {
+            FitAllForms(s, CheckIsEditing);
         }
 
         /// <summary>

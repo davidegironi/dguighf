@@ -44,6 +44,12 @@ namespace DG.UIGHFSample
             CloseAllForms(this);
         }
 
+
+        private void fitAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FitAllForms(this);
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitApplication(this);
@@ -73,6 +79,5 @@ namespace DG.UIGHFSample
         {
             ShowForm(this, typeof(FormTags));
         }
-
     }
 }
