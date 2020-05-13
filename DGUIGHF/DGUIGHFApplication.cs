@@ -35,6 +35,11 @@ namespace DG.UI.GHF
             public bool displaySplashScreen;
 
             /// <summary>
+            /// Global IsEditing Blocker enabler
+            /// </summary>
+            public bool isEditingBlockEnabled;
+
+            /// <summary>
             /// Enable or disable the custom exception handler
             /// </summary>
             public bool isStackTracerEnabled;
@@ -80,6 +85,7 @@ namespace DG.UI.GHF
             /// <param name="entryFormType"></param>
             /// <param name="entryFormParameters"></param>
             /// <param name="displaySplashScreen"></param>
+            /// <param name="isEditingBlockEnabled"></param>
             /// <param name="isStackTracerEnabled"></param>
             /// <param name="stackTracerSenderMail"></param>
             /// <param name="stackTracerSenderFrom"></param>
@@ -92,6 +98,7 @@ namespace DG.UI.GHF
                 Type entryFormType,
                 object[] entryFormParameters,
                 bool displaySplashScreen,
+                bool isEditingBlockEnabled,
                 bool isStackTracerEnabled,
                 string stackTracerSenderMail,
                 string stackTracerSenderFrom,
@@ -104,6 +111,7 @@ namespace DG.UI.GHF
                 this.entryFormType = entryFormType;
                 this.entryFormParameters = entryFormParameters;
                 this.displaySplashScreen = displaySplashScreen;
+                this.isEditingBlockEnabled = isEditingBlockEnabled;
                 this.isStackTracerEnabled = isStackTracerEnabled;
                 this.stackTracerSenderMail = stackTracerSenderMail;
                 this.stackTracerSenderFrom = stackTracerSenderFrom;
@@ -116,9 +124,19 @@ namespace DG.UI.GHF
         }
 
         /// <summary>
+        /// Check if is Editing Block is enabled
+        /// </summary>
+        public bool IsEditingBlockEnabled { get; set; }
+
+        /// <summary>
         /// Check if any form is Editing
         /// </summary>
         public bool IsEditing { get; set; }
+
+        /// <summary>
+        /// Set last editing form
+        /// </summary>
+        internal string LastEditingName { get; set; }
 
         /// <summary>
         /// Application Version
@@ -238,6 +256,9 @@ namespace DG.UI.GHF
 
             //set splash screen display
             m_displaySplashScreen = applicationConfig.displaySplashScreen;
+
+            //set is editing block enabler
+            IsEditingBlockEnabled = applicationConfig.isEditingBlockEnabled;
 
             //set stacktracer enabler
             IsStackTracerEnabled = applicationConfig.isStackTracerEnabled;

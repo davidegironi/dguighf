@@ -18,11 +18,6 @@ namespace DG.UI.GHF
         protected DGUIGHFApplication UIGHFApplication { get; private set; }
 
         /// <summary>
-        /// Check if is Editing Mode enabled
-        /// </summary>
-        protected bool CheckIsEditing { get; private set; }
-
-        /// <summary>
         /// Check if is form can close
         /// </summary>
         protected bool CheckIsClosing { get; private set; }
@@ -49,27 +44,15 @@ namespace DG.UI.GHF
         /// Initialize the Main form
         /// </summary>
         /// <param name="uighfApplication"></param>
-        /// <param name="checkIsEditing"></param>
-        public void Initialize(DGUIGHFApplication uighfApplication, bool checkIsEditing)
+        public void Initialize(DGUIGHFApplication uighfApplication)
         {
             UIGHFApplication = uighfApplication;
-
-            CheckIsEditing = checkIsEditing;
 
             //set language
             LanguageHelper = new DGUIGHFLanguageHelper(this);
             AddLanguageComponents();
             LanguageHelper.LoadFromFile(uighfApplication.LanguageFilename);
             SetAdditionalLanguage();
-        }
-
-        /// <summary>
-        /// Initialize the Main form, set default value of check Editing Mode to true
-        /// </summary>
-        /// <param name="uighfApplication"></param>
-        public void Initialize(DGUIGHFApplication uighfApplication)
-        {
-            Initialize(uighfApplication, true);
         }
 
         /// <summary>
@@ -88,13 +71,12 @@ namespace DG.UI.GHF
         /// Menu item Exit application click
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="checkIsEditing"></param>
-        public void ExitApplication(object s, bool checkIsEditing)
+        public void ExitApplication(object s)
         {
             if (UIGHFApplication == null)
                 return;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return;
 
             if (MessageBox.Show(languageBase.mainExitMessageBoxText, languageBase.mainExitMessageBoxTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
@@ -109,51 +91,29 @@ namespace DG.UI.GHF
         }
 
         /// <summary>
-        /// Menu item Exit application click, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        public void ExitApplication(object s)
-        {
-            ExitApplication(s, CheckIsEditing);
-        }
-
-        /// <summary>
         /// Form closing handler helper
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <param name="checkIsEditing"></param>
-        public void FormClosingHandler(object sender, FormClosingEventArgs e, bool checkIsEditing)
-        {
-            if (!CheckIsClosing)
-            {
-                e.Cancel = true;
-                ExitApplication(sender, checkIsEditing);
-            }
-        }
-
-        /// <summary>
-        /// Form closing handler helper, use default value to check Editing Mode
-        /// </summary>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
-            FormClosingHandler(sender, e, CheckIsEditing);
+            if (!CheckIsClosing)
+            {
+                e.Cancel = true;
+                ExitApplication(sender);
+            }
         }
 
         /// <summary>
         /// Menu item Minimize All forms click
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="checkIsEditing"></param>
-        public void MinimizeAllForms(object s, bool checkIsEditing)
+        public void MinimizeAllForms(object s)
         {
             if (UIGHFApplication == null)
                 return;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return;
 
             foreach (Form fa in (s as Form).MdiChildren)
@@ -163,25 +123,15 @@ namespace DG.UI.GHF
         }
 
         /// <summary>
-        /// Menu item Minimize All forms click, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        public void MinimizeAllForms(object s)
-        {
-            MinimizeAllForms(s, CheckIsEditing);
-        }
-
-        /// <summary>
         /// Menu item Close All forms click
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="checkIsEditing"></param>
-        public void CloseAllForms(object s, bool checkIsEditing)
+        public void CloseAllForms(object s)
         {
             if (UIGHFApplication == null)
                 return;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return;
 
             foreach (Form fa in (s as Form).MdiChildren)
@@ -191,25 +141,15 @@ namespace DG.UI.GHF
         }
 
         /// <summary>
-        /// Menu item Close All forms click, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        public void CloseAllForms(object s)
-        {
-            CloseAllForms(s, CheckIsEditing);
-        }
-
-        /// <summary>
         /// Menu item Fit All forms click
         /// </summary>
         /// <param name="s"></param>
-        /// <param name="checkIsEditing"></param>
-        public void FitAllForms(object s, bool checkIsEditing)
+        public void FitAllForms(object s)
         {
             if (UIGHFApplication == null)
                 return;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return;
 
             //get max value for minimum width and height
@@ -312,35 +252,17 @@ namespace DG.UI.GHF
         }
 
         /// <summary>
-        /// Menu item Fit All forms click, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        public void FitAllForms(object s)
-        {
-            FitAllForms(s, CheckIsEditing);
-        }
-
-        /// <summary>
         /// Show the About form
         /// </summary>
-        /// <param name="checkIsEditing"></param>
-        public void DisplayAbout(bool checkIsEditing)
+        public void DisplayAbout()
         {
             if (UIGHFApplication == null)
                 return;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return;
 
             new DGUIGHFFormAbout(UIGHFApplication.AppProduct, UIGHFApplication.AppVersion, UIGHFApplication.AppCompany, UIGHFApplication.AppCopyright, UIGHFApplication.AppWeblink, UIGHFApplication.AboutLogo, languageBase).ShowDialog();
-        }
-
-        /// <summary>
-        /// Show the About form, use default value to check Editing Mode
-        /// </summary>
-        public void DisplayAbout()
-        {
-            DisplayAbout(CheckIsEditing);
         }
 
         /// <summary>
@@ -348,15 +270,14 @@ namespace DG.UI.GHF
         /// </summary>
         /// <param name="s"></param>
         /// <param name="t"></param>
-        /// <param name="checkIsEditing"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public Form ShowForm(object s, Type t, bool checkIsEditing, params object[] args)
+        public Form ShowForm(object s, Type t, params object[] args)
         {
             if (UIGHFApplication == null)
                 return null;
 
-            if (checkIsEditing && UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 return null;
 
             bool loadme = true;
@@ -387,29 +308,6 @@ namespace DG.UI.GHF
                 f.WindowState = FormWindowState.Maximized;
             }
             return f;
-        }
-
-        /// <summary>
-        /// Show a Form, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="t"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public Form ShowForm(object s, Type t, params object[] args)
-        {
-            return ShowForm(s, t, CheckIsEditing, args);
-        }
-
-        /// <summary>
-        /// Show a Form, use default value to check Editing Mode
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public Form ShowForm(object s, Type t)
-        {
-            return ShowForm(s, t, CheckIsEditing);
         }
 
         /// <summary>

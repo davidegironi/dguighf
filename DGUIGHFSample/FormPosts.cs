@@ -415,13 +415,14 @@ namespace DG.UIGHFSample
         {
             if (vPostsBindingSource.Current != null)
             {
-                AddClick(tabElement_tabPostsextra_tabPoststotags);
+                if (AddClick(tabElement_tabPostsextra_tabPoststotags))
+                {
+                    ((poststotags)poststotagsBindingSource.Current).posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
+                    ((poststotags)poststotagsBindingSource.Current).tags_id = Convert.ToInt32(comboBox_tabPostsextra_tabPoststotags_tags.SelectedValue);
 
-                ((poststotags)poststotagsBindingSource.Current).posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
-                ((poststotags)poststotagsBindingSource.Current).tags_id = Convert.ToInt32(comboBox_tabPostsextra_tabPoststotags_tags.SelectedValue);
-
-                SaveClick(tabElement_tabPostsextra_tabPoststotags);
-                ReloadAfterSave(tabElement_tabPostsextra_tabPoststotags, (poststotags)poststotagsBindingSource.Current);
+                    SaveClick(tabElement_tabPostsextra_tabPoststotags);
+                    ReloadAfterSave(tabElement_tabPostsextra_tabPoststotags, (poststotags)poststotagsBindingSource.Current);
+                }
             }
         }
 

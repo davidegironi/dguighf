@@ -32,6 +32,11 @@ namespace DG.UI.GHF
         protected bool ReloadFormOnActive = true;
 
         /// <summary>
+        /// Check if is Editing Mode enabled
+        /// </summary>
+        protected bool CheckIsEditing { get; private set; }
+
+        /// <summary>
         /// Check if the form is loaded for the first time
         /// </summary>
         protected bool IsFirstLoad = false;
@@ -882,7 +887,7 @@ namespace DG.UI.GHF
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             //inhibit close if we are editing
-            if (UIGHFApplication.IsEditing)
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
                 e.Cancel = true;
         }
 
@@ -896,7 +901,7 @@ namespace DG.UI.GHF
             //reload on form activation
             if (m_forceFormReload)
             {
-                if (ReloadFormOnActive && !UIGHFApplication.IsEditing)
+                if (ReloadFormOnActive && ((!UIGHFApplication.IsEditing && UIGHFApplication.IsEditingBlockEnabled) || !UIGHFApplication.IsEditingBlockEnabled))
                     this.OnLoad(e);
                 m_forceFormReload = false;
             }
@@ -1490,6 +1495,9 @@ namespace DG.UI.GHF
         /// <returns></returns>
         protected bool AddClick(TabElement tabElement)
         {
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
+                return false;
+
             if (tabElement.ElementItem != null)
             {
                 tabElement.ElementItem.BindingSourceEdit.ResumeBinding();
@@ -1523,6 +1531,9 @@ namespace DG.UI.GHF
         /// <returns></returns>
         protected bool UpdateClick(TabElement tabElement)
         {
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
+                return false;
+
             //count selected items in case of multiselect
             bool loaddatasource = true;
             if (tabElement.ElementItem != null)
@@ -1588,6 +1599,9 @@ namespace DG.UI.GHF
         /// <returns></returns>
         protected bool RemoveClick(TabElement tabElement, bool displayAlertOnError)
         {
+            if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.IsEditing)
+                return false;
+
             bool elselected = false;
             object[] elselecteditems = null;
 
@@ -1970,6 +1984,7 @@ namespace DG.UI.GHF
             if (action == EditingMode.C || action == EditingMode.U || action == EditingMode.childC || action == EditingMode.childU)
             {
                 UIGHFApplication.IsEditing = true;
+                UIGHFApplication.LastEditingName = this.GetType().Name;
 
                 foreach (TabPage tabPage in TabControlMain.TabPages)
                 {
@@ -1999,9 +2014,19 @@ namespace DG.UI.GHF
             else if (action == EditingMode.D || action == EditingMode.R || action == EditingMode.childD || action == EditingMode.childR)
             {
                 if (action == EditingMode.D || action == EditingMode.childD)
+                {
                     UIGHFApplication.IsEditing = true;
+                    UIGHFApplication.LastEditingName = this.GetType().Name;
+                }
                 else
-                    UIGHFApplication.IsEditing = false;
+                {
+                    if (UIGHFApplication.IsEditingBlockEnabled && UIGHFApplication.LastEditingName == this.GetType().Name ||
+                        !UIGHFApplication.IsEditingBlockEnabled)
+                    {
+                        UIGHFApplication.IsEditing = false;
+                        UIGHFApplication.LastEditingName = null;
+                    }
+                }
 
                 foreach (TabPage tabPage in TabControlMain.TabPages)
                 {

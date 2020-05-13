@@ -15,6 +15,7 @@ namespace DG.UIGHFSample
                 entryFormType = typeof(FormMain),
                 entryFormParameters = null,
                 displaySplashScreen = true,
+                isEditingBlockEnabled = true,
                 isStackTracerEnabled = true,
                 stackTracerSenderMail = "email@email.com",
                 stackTracerSenderFrom = ConfigurationManager.AppSettings["stacktracerSenderFrom"],
