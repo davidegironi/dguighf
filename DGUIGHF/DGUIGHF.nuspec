@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DG.DGUIGHF</id>
+    <version>$version$</version>
+    <title>WinForm UI Helper</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/davidegironi/dguighf</projectUrl>
+    <iconUrl>https://github.com/davidegironi/dguighf/raw/master/DGUIGHF/Resources/Images/DGUIGHF_logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+    <tags>WinForm, UI Helper, Framework</tags>
+  </metadata>
+  <files>
+    <file src="..\License\LICENSE" target="LICENSE" /> 
+  </files>
+</package>

@@ -114,6 +114,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DGUIGHF.nuspec" />
     <None Include="Resources\splashscreen_loader.gif" />
   </ItemGroup>
   <ItemGroup>
