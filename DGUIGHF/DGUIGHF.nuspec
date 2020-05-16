@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>DG.DGUIGHF</id>
+    <id>DG.UIGHF</id>
     <version>$version$</version>
     <title>WinForm UI Helper</title>
     <authors>$author$</authors>
