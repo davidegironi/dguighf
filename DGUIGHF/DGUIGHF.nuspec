@@ -6,9 +6,9 @@
     <title>WinForms UI Helper</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://opensource.org/licenses/MS-PL</licenseUrl>
+    <license type="file">LICENSE</license>
     <projectUrl>https://github.com/davidegironi/dguighf</projectUrl>
-    <iconUrl>https://github.com/davidegironi/dguighf/raw/master/DGUIGHF/Resources/Images/DGUIGHF_logo.png</iconUrl>
+    <icon>logo.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>$copyright$</copyright>
@@ -18,6 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\License\LICENSE" target="LICENSE" /> 
+    <file src="..\License\LICENSE" target="LICENSE" />
+    <file src="..\DGUIGHF\Resources\Images\DGUIGHF_logo.png" target="logo.png" />
   </files>
 </package>

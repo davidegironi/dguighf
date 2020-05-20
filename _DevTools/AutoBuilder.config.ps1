@@ -66,7 +66,7 @@ $builds = @(
 					@{
 						FileNameFrom = "..\README.md";
 						FileNameTo = "..\README.md"
-					}
+					}				
 				)
 			}
 		);
