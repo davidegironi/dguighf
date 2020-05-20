@@ -3,7 +3,7 @@
   <metadata>
     <id>DG.UIGHF</id>
     <version>$version$</version>
-    <title>WinForm UI Helper</title>
+    <title>WinForms UI Helper</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>https://opensource.org/licenses/MS-PL</licenseUrl>
@@ -12,7 +12,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>$copyright$</copyright>
-    <tags>WinForm, UI Helper, Framework</tags>
+    <tags>WinForms, UI Helper, Framework, DataModel</tags>
+    <dependencies>
+      <dependency id="DG.DataModel" version="1.2.0.1" />
+    </dependencies>
   </metadata>
   <files>
     <file src="..\License\LICENSE" target="LICENSE" /> 
