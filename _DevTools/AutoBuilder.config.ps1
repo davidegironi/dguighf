@@ -6,7 +6,7 @@ $solutionName = "DGUIGHF"
 $versionMajor = "1"
 $versionMinor = "2"
 $versionBuild = GetVersionBuild
-$versionRevision = "12"
+$versionRevision = "13"
 #build version number
 $assemblyVersion = GetVersion $versionMajor $versionMinor $versionBuild $versionRevision
 $fileVersion = $assemblyVersion
@@ -47,7 +47,29 @@ $builds = @(
 			}
 		);
 		#files to include in the release binary package
-		ReleaseBinIncludeFiles = @();
+		ReleaseBinIncludeFiles = @(
+			@{
+				Name = "DGUIGHF";
+				Files = @(
+					@{
+						FileNameFrom = "..\License\";
+						FileNameTo = "..\"
+					},
+					@{
+						FileNameFrom = "..\License\LICENSE";
+						FileNameTo = "..\DGUIGHF\LICENSE"
+					},
+					@{
+						FileNameFrom = "..\README.md";
+						FileNameTo = "..\DGUIGHF\README.md"
+					},
+					@{
+						FileNameFrom = "..\README.md";
+						FileNameTo = "..\README.md"
+					}
+				)
+			}
+		);
 		#unit tests to run
 		Tests = @();
 		#commands to run before packaging of the release source

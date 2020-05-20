@@ -1,7 +1,7 @@
 About
 ===
 
-**DGUIGHF** is a **UI GUI Helper Framework** built for *.NET WinForm*.
+**DGUIGHF** is a **UI GUI Helper Framework** built for *.NET WinForms*.
 
 ## Download
 
