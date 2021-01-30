@@ -35,7 +35,7 @@ $builds = @(
 	@{
 		#solutions filename (.sln)
 		Name = "DGUIGHF";
-		#msbuild optionals contants
+		#msbuild optionals constants
 		Constants = "";
 		#projects to exclude from the release binary package
 		ReleaseBinExcludeProjects = @(
