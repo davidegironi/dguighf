@@ -347,7 +347,12 @@ namespace DG.UIGHFSample
 
             if (vPostsBindingSource.Current != null)
             {
+#if NETFRAMEWORK
+                posts_id = Int32.Parse((((DataRowView)vPostsBindingSource.Current).Row)["posts_id"].ToString());
+#else
                 posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
+#endif
+
             }
 
             IEnumerable<VPostsToTags> vPostsToTags =
@@ -417,7 +422,12 @@ namespace DG.UIGHFSample
             {
                 if (AddClick(tabElement_tabPostsextra_tabPoststotags))
                 {
+
+#if NETFRAMEWORK
+                    ((poststotags)poststotagsBindingSource.Current).posts_id = Int32.Parse((((DataRowView)vPostsBindingSource.Current).Row)["posts_id"].ToString());
+#else
                     ((poststotags)poststotagsBindingSource.Current).posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
+#endif
                     ((poststotags)poststotagsBindingSource.Current).tags_id = Convert.ToInt32(comboBox_tabPostsextra_tabPoststotags_tags.SelectedValue);
 
                     SaveClick(tabElement_tabPostsextra_tabPoststotags);

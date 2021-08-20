@@ -1,166 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4E05E50-CE21-4155-B753-695011FAA326}</ProjectGuid>
+    <TargetFrameworks>net40;netcoreapp3.1</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DG.UIGHFSample.Model</RootNamespace>
-    <AssemblyName>DGUIGHFSampleModel</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Version>1.2.26020.15</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DGDataModel, Version=1.2.24520.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DG.DataModel.1.2.24520.8\lib\net452\DGDataModel.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
+    <PackageReference Include="DG.DataModel" Version="1.2.26020.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DGUIGHFSampleModelEntityNetCore\DGUIGHFSampleModelEntityNetCore.csproj" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
+    <ProjectReference Include="..\DGUIGHFSampleModelEntityNetFramework\DGUIGHFSampleModelEntityNetFramework.csproj" Condition="'$(TargetFramework)' == 'net40'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DGUIGHFSampleModel.cs" />
-    <Compile Include="Entity\blogs.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\comments.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\commentsuseful.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model_dguighftest.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model_dguighftest.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model_dguighftest.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\posts.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\postsadditionals.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\poststotags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FixEfProviderServicesProblem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\BlogsRepository.cs" />
-    <Compile Include="Repositories\CommentsRepository.cs" />
-    <Compile Include="Repositories\CommentsUsefulRepository.cs" />
-    <Compile Include="Repositories\PostsAdditionalsRepository.cs" />
-    <Compile Include="Repositories\PostsRepository.cs" />
-    <Compile Include="Repositories\PostsToTagsRepository.cs" />
-    <Compile Include="Repositories\TagsRepository.cs" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="EntityFramework" Version="6.1.3" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <EntityDeploy Include="Entity\Model_dguighftest.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_dguighftest.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="App.Debug.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Release.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="Entity\Model_dguighftest.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Entity\Model_dguighftest.edmx.diagram">
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-    </None>
-    <None Include="Entity\Model_dguighftest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest.cs</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Hosting">
+      <Version>5.0.0</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
-  <Target Name="AfterCompile" Condition="Exists('App.$(Configuration).config')">
-    <!--Generate transformed app config in the intermediate directory-->
-    <TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
-    <!--Force build process to use the transformed configuration file from now on.-->
-    <ItemGroup>
-      <AppConfigWithTargetPath Remove="App.config" />
-      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
-        <TargetPath>$(TargetFileName).config</TargetPath>
-      </AppConfigWithTargetPath>
-    </ItemGroup>
-  </Target>
-  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
-  <Target Name="AfterPublish">
-    <PropertyGroup>
-      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
-    </PropertyGroup>
-    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
-    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
-  </Target>
 </Project>

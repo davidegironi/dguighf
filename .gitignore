@@ -254,3 +254,4 @@ _DevTools/TestResult.xml
 
 # App.config
 App.*.config
+*-Config.ps1

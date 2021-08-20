@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dguighftestEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="blogs">
+          <Key>
+            <PropertyRef Name="blogs_id" />
+          </Key>
+          <Property Name="blogs_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="blogs_title" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="blogs_description" Type="text" Nullable="false" />
+          <Property Name="blogs_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="comments_id" />
+          </Key>
+          <Property Name="comments_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="posts_id" Type="int" Nullable="false" />
+          <Property Name="comments_text" Type="text" Nullable="false" />
+          <Property Name="comments_username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="comments_email" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="commentsuseful">
+          <Key>
+            <PropertyRef Name="commentsuseful_id" />
+          </Key>
+          <Property Name="commentsuseful_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comments_id" Type="int" Nullable="false" />
+          <Property Name="commentsuseful_points" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="posts_id" />
+          </Key>
+          <Property Name="posts_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="blogs_id" Type="int" Nullable="false" />
+          <Property Name="posts_title" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="posts_text" Type="text" Nullable="false" />
+          <Property Name="posts_username" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="posts_email" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="postsadditionals">
+          <Key>
+            <PropertyRef Name="posts_id" />
+          </Key>
+          <Property Name="posts_id" Type="int" Nullable="false" />
+          <Property Name="postsadditionals_note" Type="text" />
+        </EntityType>
+        <EntityType Name="poststotags">
+          <Key>
+            <PropertyRef Name="posts_id" />
+            <PropertyRef Name="tags_id" />
+          </Key>
+          <Property Name="posts_id" Type="int" Nullable="false" />
+          <Property Name="tags_id" Type="int" Nullable="false" />
+          <Property Name="poststotags_comments" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="tags_id" />
+          </Key>
+          <Property Name="tags_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tags_name" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_comments_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentsuseful_comments">
+          <End Role="comments" Type="Self.comments" Multiplicity="1" />
+          <End Role="commentsuseful" Type="Self.commentsuseful" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comments">
+              <PropertyRef Name="comments_id" />
+            </Principal>
+            <Dependent Role="commentsuseful">
+              <PropertyRef Name="comments_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posts_blogs">
+          <End Role="blogs" Type="Self.blogs" Multiplicity="1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blogs">
+              <PropertyRef Name="blogs_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="blogs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postsadditionals_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="postsadditionals" Type="Self.postsadditionals" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="postsadditionals">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_poststotags_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="poststotags" Type="Self.poststotags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="poststotags">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_poststotags_tags">
+          <End Role="tags" Type="Self.tags" Multiplicity="1" />
+          <End Role="poststotags" Type="Self.poststotags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="tags_id" />
+            </Principal>
+            <Dependent Role="poststotags">
+              <PropertyRef Name="tags_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dguighftestEntitiesStoreContainer">
+          <EntitySet Name="blogs" EntityType="Self.blogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commentsuseful" EntityType="Self.commentsuseful" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="posts" EntityType="Self.posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postsadditionals" EntityType="Self.postsadditionals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="poststotags" EntityType="Self.poststotags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tags" EntityType="Self.tags" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comments_posts" Association="Self.FK_comments_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentsuseful_comments" Association="Self.FK_commentsuseful_comments">
+            <End Role="comments" EntitySet="comments" />
+            <End Role="commentsuseful" EntitySet="commentsuseful" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posts_blogs" Association="Self.FK_posts_blogs">
+            <End Role="blogs" EntitySet="blogs" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postsadditionals_posts" Association="Self.FK_postsadditionals_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="postsadditionals" EntitySet="postsadditionals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_poststotags_posts" Association="Self.FK_poststotags_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="poststotags" EntitySet="poststotags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_poststotags_tags" Association="Self.FK_poststotags_tags">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="poststotags" EntitySet="poststotags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dguighftestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="blogs">
+          <Key>
+            <PropertyRef Name="blogs_id" />
+          </Key>
+          <Property Name="blogs_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="blogs_title" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="blogs_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="blogs_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="posts" Relationship="Self.FK_posts_blogs" FromRole="blogs" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="comments_id" />
+          </Key>
+          <Property Name="comments_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="posts_id" Type="Int32" Nullable="false" />
+          <Property Name="comments_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comments_username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comments_email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="posts" Relationship="Self.FK_comments_posts" FromRole="comments" ToRole="posts" />
+          <NavigationProperty Name="commentsuseful" Relationship="Self.FK_commentsuseful_comments" FromRole="comments" ToRole="commentsuseful" />
+        </EntityType>
+        <EntityType Name="commentsuseful">
+          <Key>
+            <PropertyRef Name="commentsuseful_id" />
+          </Key>
+          <Property Name="commentsuseful_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comments_id" Type="Int32" Nullable="false" />
+          <Property Name="commentsuseful_points" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_commentsuseful_comments" FromRole="commentsuseful" ToRole="comments" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="posts_id" />
+          </Key>
+          <Property Name="posts_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="blogs_id" Type="Int32" Nullable="false" />
+          <Property Name="posts_title" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="posts_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="posts_username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="posts_email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="blogs" Relationship="Self.FK_posts_blogs" FromRole="posts" ToRole="blogs" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_comments_posts" FromRole="posts" ToRole="comments" />
+          <NavigationProperty Name="postsadditionals" Relationship="Self.FK_postsadditionals_posts" FromRole="posts" ToRole="postsadditionals" />
+          <NavigationProperty Name="poststotags" Relationship="Self.FK_poststotags_posts" FromRole="posts" ToRole="poststotags" />
+        </EntityType>
+        <EntityType Name="postsadditionals">
+          <Key>
+            <PropertyRef Name="posts_id" />
+          </Key>
+          <Property Name="posts_id" Type="Int32" Nullable="false" />
+          <Property Name="postsadditionals_note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="posts" Relationship="Self.FK_postsadditionals_posts" FromRole="postsadditionals" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="poststotags">
+          <Key>
+            <PropertyRef Name="posts_id" />
+            <PropertyRef Name="tags_id" />
+          </Key>
+          <Property Name="posts_id" Type="Int32" Nullable="false" />
+          <Property Name="tags_id" Type="Int32" Nullable="false" />
+          <Property Name="poststotags_comments" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="posts" Relationship="Self.FK_poststotags_posts" FromRole="poststotags" ToRole="posts" />
+          <NavigationProperty Name="tags" Relationship="Self.FK_poststotags_tags" FromRole="poststotags" ToRole="tags" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="tags_id" />
+          </Key>
+          <Property Name="tags_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tags_name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="poststotags" Relationship="Self.FK_poststotags_tags" FromRole="tags" ToRole="poststotags" />
+        </EntityType>
+        <Association Name="FK_posts_blogs">
+          <End Role="blogs" Type="Self.blogs" Multiplicity="1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blogs">
+              <PropertyRef Name="blogs_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="blogs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comments_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="comments" Type="Self.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentsuseful_comments">
+          <End Role="comments" Type="Self.comments" Multiplicity="1" />
+          <End Role="commentsuseful" Type="Self.commentsuseful" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comments">
+              <PropertyRef Name="comments_id" />
+            </Principal>
+            <Dependent Role="commentsuseful">
+              <PropertyRef Name="comments_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postsadditionals_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="postsadditionals" Type="Self.postsadditionals" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="postsadditionals">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_poststotags_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="poststotags" Type="Self.poststotags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="posts_id" />
+            </Principal>
+            <Dependent Role="poststotags">
+              <PropertyRef Name="posts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_poststotags_tags">
+          <End Role="tags" Type="Self.tags" Multiplicity="1" />
+          <End Role="poststotags" Type="Self.poststotags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="tags_id" />
+            </Principal>
+            <Dependent Role="poststotags">
+              <PropertyRef Name="tags_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dguighftestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="blogs" EntityType="Self.blogs" />
+          <EntitySet Name="comments" EntityType="Self.comments" />
+          <EntitySet Name="commentsuseful" EntityType="Self.commentsuseful" />
+          <EntitySet Name="posts" EntityType="Self.posts" />
+          <EntitySet Name="postsadditionals" EntityType="Self.postsadditionals" />
+          <EntitySet Name="poststotags" EntityType="Self.poststotags" />
+          <EntitySet Name="tags" EntityType="Self.tags" />
+          <AssociationSet Name="FK_posts_blogs" Association="Self.FK_posts_blogs">
+            <End Role="blogs" EntitySet="blogs" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comments_posts" Association="Self.FK_comments_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentsuseful_comments" Association="Self.FK_commentsuseful_comments">
+            <End Role="comments" EntitySet="comments" />
+            <End Role="commentsuseful" EntitySet="commentsuseful" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postsadditionals_posts" Association="Self.FK_postsadditionals_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="postsadditionals" EntitySet="postsadditionals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_poststotags_posts" Association="Self.FK_poststotags_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="poststotags" EntitySet="poststotags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_poststotags_tags" Association="Self.FK_poststotags_tags">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="poststotags" EntitySet="poststotags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dguighftestEntitiesStoreContainer" CdmEntityContainer="dguighftestEntities">
+          <EntitySetMapping Name="blogs">
+            <EntityTypeMapping TypeName="dguighftestModel.blogs">
+              <MappingFragment StoreEntitySet="blogs">
+                <ScalarProperty Name="blogs_id" ColumnName="blogs_id" />
+                <ScalarProperty Name="blogs_title" ColumnName="blogs_title" />
+                <ScalarProperty Name="blogs_description" ColumnName="blogs_description" />
+                <ScalarProperty Name="blogs_date" ColumnName="blogs_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="dguighftestModel.comments">
+              <MappingFragment StoreEntitySet="comments">
+                <ScalarProperty Name="comments_id" ColumnName="comments_id" />
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
+                <ScalarProperty Name="comments_text" ColumnName="comments_text" />
+                <ScalarProperty Name="comments_username" ColumnName="comments_username" />
+                <ScalarProperty Name="comments_email" ColumnName="comments_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="commentsuseful">
+            <EntityTypeMapping TypeName="dguighftestModel.commentsuseful">
+              <MappingFragment StoreEntitySet="commentsuseful">
+                <ScalarProperty Name="commentsuseful_id" ColumnName="commentsuseful_id" />
+                <ScalarProperty Name="comments_id" ColumnName="comments_id" />
+                <ScalarProperty Name="commentsuseful_points" ColumnName="commentsuseful_points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="dguighftestModel.posts">
+              <MappingFragment StoreEntitySet="posts">
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
+                <ScalarProperty Name="blogs_id" ColumnName="blogs_id" />
+                <ScalarProperty Name="posts_title" ColumnName="posts_title" />
+                <ScalarProperty Name="posts_text" ColumnName="posts_text" />
+                <ScalarProperty Name="posts_username" ColumnName="posts_username" />
+                <ScalarProperty Name="posts_email" ColumnName="posts_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postsadditionals">
+            <EntityTypeMapping TypeName="dguighftestModel.postsadditionals">
+              <MappingFragment StoreEntitySet="postsadditionals">
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
+                <ScalarProperty Name="postsadditionals_note" ColumnName="postsadditionals_note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poststotags">
+            <EntityTypeMapping TypeName="dguighftestModel.poststotags">
+              <MappingFragment StoreEntitySet="poststotags">
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
+                <ScalarProperty Name="tags_id" ColumnName="tags_id" />
+                <ScalarProperty Name="poststotags_comments" ColumnName="poststotags_comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tags">
+            <EntityTypeMapping TypeName="dguighftestModel.tags">
+              <MappingFragment StoreEntitySet="tags">
+                <ScalarProperty Name="tags_id" ColumnName="tags_id" />
+                <ScalarProperty Name="tags_name" ColumnName="tags_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -237,8 +237,14 @@ namespace DG.UI.GHF
             AppName = Assembly.GetCallingAssembly().GetName().Name.ToString();
             AppTitle = ((AssemblyTitleAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyTitleAttribute), false)).Title;
             AppProduct = ((AssemblyProductAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyProductAttribute), false)).Product;
-            AppCopyright = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCopyrightAttribute), false)).Copyright;
-            AppCompany = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCompanyAttribute), false)).Company;
+            if (((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCopyrightAttribute), false)) != null)
+                AppCopyright = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCopyrightAttribute), false)).Copyright;
+            else
+                AppCopyright = "";
+            if (((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCompanyAttribute), false)) != null)
+                AppCompany = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly.GetCallingAssembly(), typeof(AssemblyCompanyAttribute), false)).Company;
+            else
+                AppCompany = "";
             AppWeblink = applicationConfig.appWeblink;
 
             //language

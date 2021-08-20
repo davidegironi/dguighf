@@ -12,7 +12,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+#if NETFRAMEWORK
 using System.Web.Script.Serialization;
+#else
+using System.Text.Json;
+#endif
 
 namespace DG.UI.GHF
 {
@@ -394,7 +398,11 @@ namespace DG.UI.GHF
                 try
                 {
                     string jsontext = File.ReadAllText(filename);
+#if NETFRAMEWORK
                     language = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(jsontext);
+#else
+                    language = JsonSerializer.Deserialize<Dictionary<string, string>>(jsontext);
+#endif
                     ret = true;
                 }
                 catch { }
@@ -422,7 +430,11 @@ namespace DG.UI.GHF
                 //serialize the list
                 try
                 {
+#if NETFRAMEWORK
                     string jsontext = new SimpleJsonFormatter(new JavaScriptSerializer().Serialize(language)).Format();
+#else
+                    string jsontext = new SimpleJsonFormatter(JsonSerializer.Serialize(language)).Format();
+#endif
                     File.WriteAllText(filename, jsontext, Encoding.UTF8);
                     ret = true;
                 }
@@ -450,7 +462,11 @@ namespace DG.UI.GHF
                 //serialize the list
                 try
                 {
+#if NETFRAMEWORK
                     string jsontext = new SimpleJsonFormatter(new JavaScriptSerializer().Serialize(defaultlanguage)).Format();
+#else
+                    string jsontext = new SimpleJsonFormatter(JsonSerializer.Serialize(defaultlanguage)).Format();
+#endif
                     File.WriteAllText(filename, jsontext, Encoding.UTF8);
                     ret = true;
                 }
@@ -486,7 +502,11 @@ namespace DG.UI.GHF
                 try
                 {
                     string jsontext = File.ReadAllText(filename);
+#if NETFRAMEWORK
                     loadedlanguage = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(jsontext);
+#else
+                    loadedlanguage = JsonSerializer.Deserialize<Dictionary<string, string>>(jsontext);
+#endif
                     ret = true;
                 }
                 catch { }
@@ -526,7 +546,11 @@ namespace DG.UI.GHF
                 //serialize the list
                 try
                 {
+#if NETFRAMEWORK
                     string jsontext = new SimpleJsonFormatter(new JavaScriptSerializer().Serialize(rebuiltlanguage)).Format();
+#else
+                    string jsontext = new SimpleJsonFormatter(JsonSerializer.Serialize(rebuiltlanguage)).Format();
+#endif
                     File.WriteAllText(filename, jsontext, Encoding.UTF8);
                     ret = true;
                 }

@@ -252,7 +252,7 @@ namespace DG.UIGHFSample
                 TabElements = new List<TabElement>()
                 {
                     tabElement_tabPostslist_tabPosts,
-                    tabElement_tabPostslist_tabCommentslist                
+                    tabElement_tabPostslist_tabCommentslist
                 }
             };
 
@@ -354,7 +354,11 @@ namespace DG.UIGHFSample
 
             if (vBlogsBindingSource.Current != null)
             {
+#if NETFRAMEWORK
+                blogs_id = Int32.Parse((((DataRowView)vBlogsBindingSource.Current).Row)["blogs_id"].ToString());
+#else
                 blogs_id = (((DataRowView)vBlogsBindingSource.Current).Row).Field<int>("blogs_id");
+#endif
             }
 
             IEnumerable<VPosts> vPosts =
@@ -422,7 +426,11 @@ namespace DG.UIGHFSample
         {
             if (AddClick(tabElement_tabPostslist_tabPosts))
             {
+#if NETFRAMEWORK
+                int blogs_id = Int32.Parse((((DataRowView)vBlogsBindingSource.Current).Row)["blogs_id"].ToString());
+#else
                 int blogs_id = (((DataRowView)vBlogsBindingSource.Current).Row).Field<int>("blogs_id");
+#endif
                 ((posts)postsBindingSource.Current).blogs_id = blogs_id;
             }
         }
@@ -443,7 +451,11 @@ namespace DG.UIGHFSample
 
             if (vPostsBindingSource.Current != null)
             {
+#if NETFRAMEWORK
+                posts_id = Int32.Parse((((DataRowView)vPostsBindingSource.Current).Row)["posts_id"].ToString());
+#else
                 posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
+#endif
             }
 
             IEnumerable<VComments> vComments =
@@ -513,7 +525,11 @@ namespace DG.UIGHFSample
             {
                 if (AddClick(tabElement_tabPostslist_tabCommentslist_tabComments))
                 {
+#if NETFRAMEWORK
+                    int posts_id = Int32.Parse((((DataRowView)vPostsBindingSource.Current).Row)["posts_id"].ToString());
+#else
                     int posts_id = (((DataRowView)vPostsBindingSource.Current).Row).Field<int>("posts_id");
+#endif
                     ((comments)commentsBindingSource.Current).posts_id = posts_id;
                 }
             }
@@ -534,7 +550,11 @@ namespace DG.UIGHFSample
             int comments_id = -1;
             if (vCommentsBindingSource.Current != null)
             {
+#if NETFRAMEWORK
+                comments_id = Int32.Parse((((DataRowView)vCommentsBindingSource.Current).Row)["comments_id"].ToString());
+#else
                 comments_id = (((DataRowView)vCommentsBindingSource.Current).Row).Field<int>("comments_id");
+#endif
             }
 
             IEnumerable<VCommentsUseful> vCommentsUseful =
@@ -605,7 +625,11 @@ namespace DG.UIGHFSample
             {
                 if (AddClick(tabElement_tabPostslist_tabCommentslist_tabCommentsuseful))
                 {
+#if NETFRAMEWORK
+                    int comments_id = Int32.Parse((((DataRowView)vCommentsBindingSource.Current).Row)["comments_id"].ToString());
+#else
                     int comments_id = (((DataRowView)vCommentsBindingSource.Current).Row).Field<int>("comments_id");
+#endif
                     ((commentsuseful)commentsusefulBindingSource.Current).comments_id = comments_id;
                 }
             }

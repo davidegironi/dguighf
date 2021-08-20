@@ -95,7 +95,9 @@ namespace DG.UI.GHF
             backgroundThread = new Thread(() => DGUIGHFFormSplashScreen.ShowForm(appName, appCopyright, logo));
 
             backgroundThread.IsBackground = true;
+#if NETFRAMEWORK
             backgroundThread.SetApartmentState(ApartmentState.STA);
+#endif
             backgroundThread.Start();
         }
 
@@ -104,7 +106,9 @@ namespace DG.UI.GHF
         /// </summary>
         private static void CloseSplashScreen()
         {
+#if NETFRAMEWORK
             backgroundThread.Abort();
+#endif
             backgroundThread = null;
             splashscreen = null;
             closeme = true;

@@ -6,10 +6,9 @@ $solutionName = "DGUIGHF"
 $versionMajor = "1"
 $versionMinor = "2"
 $versionBuild = GetVersionBuild
-$versionRevision = "14"
+$versionRevision = "15"
 #build version number
-$assemblyVersion = GetVersion $versionMajor $versionMinor $versionBuild $versionRevision
-$fileVersion = $assemblyVersion
+$version = GetVersion $versionMajor $versionMinor $versionBuild $versionRevision
 
 #base folder for of the solution
 $baseDir  = Resolve-Path .\..\
@@ -44,6 +43,12 @@ $builds = @(
 			},
 			@{
 				Name = "DGUIGHFSampleModel";
+			},
+			@{
+				Name = "DGUIGHFSampleModelEntityNetCore";
+			},
+			@{
+				Name = "DGUIGHFSampleModelEntityNetFramework";
 			}
 		);
 		#files to include in the release binary package
@@ -52,21 +57,13 @@ $builds = @(
 				Name = "DGUIGHF";
 				Files = @(
 					@{
-						FileNameFrom = "..\License\";
-						FileNameTo = "..\"
-					},
-					@{
-						FileNameFrom = "..\License\LICENSE";
-						FileNameTo = "..\DGUIGHF\LICENSE"
+						FileNameFrom = "..\License";
+						FileNameTo = "."
 					},
 					@{
 						FileNameFrom = "..\README.md";
-						FileNameTo = "..\DGUIGHF\README.md"
-					},
-					@{
-						FileNameFrom = "..\README.md";
-						FileNameTo = "..\README.md"
-					}				
+						FileNameTo = "README.md"
+					}
 				)
 			}
 		);
@@ -85,10 +82,6 @@ $builds = @(
 			}
 		);
 		#commands to run before packaging of the release source
-		ReleaseBinCmd = @(
-			@{
-				Cmd = ".\copylicense.bat"
-			}
-		);
+		ReleaseBinCmd = @();
 	};
 )
