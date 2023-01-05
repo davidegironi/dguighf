@@ -53,7 +53,7 @@
             // 
             // label_application
             // 
-            this.label_application.Font = new System.Drawing.Font("Open Sans Light", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_application.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_application.ForeColor = System.Drawing.Color.White;
             this.label_application.Location = new System.Drawing.Point(7, 14);
             this.label_application.Name = "label_application";
@@ -100,7 +100,7 @@
             // 
             // pictureBox_logo
             // 
-            this.pictureBox_logo.BackgroundImage = global::DG.UI.GHF.Properties.Resources.splashscreen_logo;
+            this.pictureBox_logo.Image = global::DG.UI.GHF.Properties.Resources.splashscreen_logo;
             this.pictureBox_logo.Location = new System.Drawing.Point(302, 222);
             this.pictureBox_logo.Name = "pictureBox_logo";
             this.pictureBox_logo.Size = new System.Drawing.Size(108, 30);

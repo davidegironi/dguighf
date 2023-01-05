@@ -154,7 +154,11 @@ namespace DG.UI.GHF
                 button_details.Text = "> Show Details";
 
                 int actualwidth = this.Size.Width;
+#if NETFRAMEWORK
                 Size minsize = new Size(480, 320 - 124);
+#else
+                Size minsize = new Size(480, 345 - 124);
+#endif
                 if (this.Size.Height < minsize.Height)
                 {
                     this.Size = minsize;
@@ -172,7 +176,11 @@ namespace DG.UI.GHF
                 button_details.Text = "< Hide Details";
 
                 int actualwidth = this.Size.Width;
+#if NETFRAMEWORK
                 Size minsize = new Size(480, 320);
+#else
+                Size minsize = new Size(480, 345);
+#endif
                 if (this.Size.Height < minsize.Height)
                 {
                     this.Size = minsize;
