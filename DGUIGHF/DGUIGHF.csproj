@@ -5,10 +5,10 @@
     <RootNamespace>DG.UI.GHF</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>DGUIGHF</AssemblyName>
-    <Version>1.2.27705.16</Version>
-    <AssemblyVersion>1.2.27705.16</AssemblyVersion>
-    <FileVersion>1.2.27705.16</FileVersion>
-    <PackageVersion>1.2.27705.16</PackageVersion>
+    <Version>1.2.27928.17</Version>
+    <AssemblyVersion>1.2.27928.17</AssemblyVersion>
+    <FileVersion>1.2.27928.17</FileVersion>
+    <PackageVersion>1.2.27928.17</PackageVersion>
     <UseWindowsForms>true</UseWindowsForms>
     <Title>DGUIGHF</Title>
     <Description>UI GUI Helper Framework built for .NET WinForms</Description>

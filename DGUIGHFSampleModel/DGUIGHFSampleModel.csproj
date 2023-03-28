@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>DG.UIGHFSample.Model</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Version>1.2.27705.16</Version>
+    <Version>1.2.27928.17</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DG.DataModel" Version="1.2.26020.10" />

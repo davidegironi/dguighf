@@ -122,50 +122,53 @@ namespace DG.UI.GHF
             foreach (FieldInfo genericdformlanguage in _sender.GetType().GetFields())
             {
                 object genericformlanguageinstance = genericdformlanguage.GetValue(_sender);
-                if (genericformlanguageinstance.GetType().GetInterfaces().Contains(typeof(IDGUIGHFLanguage)))
+                if (genericformlanguageinstance != null)
                 {
-                    foreach (FieldInfo field in genericformlanguageinstance.GetType().GetFields())
+                    if (genericformlanguageinstance.GetType().GetInterfaces().Contains(typeof(IDGUIGHFLanguage)))
                     {
-                        if (field.FieldType == typeof(string))
+                        foreach (FieldInfo field in genericformlanguageinstance.GetType().GetFields())
                         {
-                            string key = field.Name;
-                            string value = field.GetValue(genericformlanguageinstance).ToString();
-
-                            bool addorupdate = false;
-
-                            if (!defaulttext.ContainsKey(key))
+                            if (field.FieldType == typeof(string))
                             {
-                                addorupdate = true;
-                            }
-                            else
-                            {
-                                if (_defaulttext.ContainsKey(key))
+                                string key = field.Name;
+                                string value = field.GetValue(genericformlanguageinstance).ToString();
+
+                                bool addorupdate = false;
+
+                                if (!defaulttext.ContainsKey(key))
                                 {
-                                    if (value != defaulttext[key] && value != _defaulttext[key])
-                                    {
-                                        addorupdate = true;
-                                    }
+                                    addorupdate = true;
                                 }
                                 else
                                 {
-                                    if (value != defaulttext[key])
+                                    if (_defaulttext.ContainsKey(key))
                                     {
-                                        addorupdate = true;
+                                        if (value != defaulttext[key] && value != _defaulttext[key])
+                                        {
+                                            addorupdate = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (value != defaulttext[key])
+                                        {
+                                            addorupdate = true;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (addorupdate)
-                            {
-                                string keyprefix = "Text-";
-                                if (_sender.GetType().IsSubclassOf(typeof(DGUIGHFForm)) ||
-                                    _sender.GetType().IsSubclassOf(typeof(DGUIGHFFormMain)))
-                                    keyprefix = "Form-";
+                                if (addorupdate)
+                                {
+                                    string keyprefix = "Text-";
+                                    if (_sender.GetType().IsSubclassOf(typeof(DGUIGHFForm)) ||
+                                        _sender.GetType().IsSubclassOf(typeof(DGUIGHFFormMain)))
+                                        keyprefix = "Form-";
 
-                                if (!ret.ContainsKey(_sender.GetType().Name + "-" + key))
-                                    ret.Add(keyprefix + _sender.GetType().Name + "-" + key, value);
-                                else
-                                    ret[keyprefix + _sender.GetType().Name + "-" + key] = value;
+                                    if (!ret.ContainsKey(_sender.GetType().Name + "-" + key))
+                                        ret.Add(keyprefix + _sender.GetType().Name + "-" + key, value);
+                                    else
+                                        ret[keyprefix + _sender.GetType().Name + "-" + key] = value;
+                                }
                             }
                         }
                     }
