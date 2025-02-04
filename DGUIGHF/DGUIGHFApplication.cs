@@ -4,6 +4,7 @@
 // Please refer to LICENSE file for licensing information.
 #endregion
 
+using DG.DataConcurrencyHelper;
 using System;
 using System.Drawing;
 using System.Reflection;
@@ -19,6 +20,36 @@ namespace DG.UI.GHF
         /// </summary>
         public struct DGUIGHFApplicationConfig
         {
+            /// <summary>
+            /// Global Data Concurrency Helper enabler
+            /// </summary>
+            public bool isConcurrecyHelperEnabled;
+
+            /// <summary>
+            /// Tab Elements default Data Concurrency Helper enabler
+            /// </summary>
+            public bool defaultConcurrecyHelperEnabled;
+
+            /// <summary>
+            /// Tab Elements default Data Concurrency Helper is blocking
+            /// </summary>
+            public bool defaultConcurrecyHelperIsBlocking;
+
+            /// <summary>
+            /// Global Concurrency Helper connection string
+            /// </summary>
+            public string concurrecyHelperConnectionString;
+
+            /// <summary>
+            /// Global Concurrency Helper table prefix
+            /// </summary>
+            public string concurrecyHelperTablePrefix;
+
+            /// <summary>
+            /// Tab Elements default data consistency check on save
+            /// </summary>
+            public bool defaultConsistencyCheckOnSave;
+
             /// <summary>
             /// First form to be loaded
             /// </summary>
@@ -82,6 +113,12 @@ namespace DG.UI.GHF
             /// <summary>
             /// Initialized the Application Configuration
             /// </summary>
+            /// <param name="isConcurrecyHelperEnabled"></param>
+            /// <param name="defaultConcurrecyHelperEnabled"></param>
+            /// <param name="defaultConcurrecyHelperIsBlocking"></param>
+            /// <param name="concurrecyHelperConnectionString"></param>
+            /// <param name="concurrecyHelperTablePrefix"></param>
+            /// <param name="defaultConsistencyCheckOnSave"></param>
             /// <param name="entryFormType"></param>
             /// <param name="entryFormParameters"></param>
             /// <param name="displaySplashScreen"></param>
@@ -95,6 +132,12 @@ namespace DG.UI.GHF
             /// <param name="aboutLogo"></param>
             /// <param name="splashScreenLogo"></param>
             public DGUIGHFApplicationConfig(
+                bool isConcurrecyHelperEnabled,
+                bool defaultConcurrecyHelperEnabled,
+                bool defaultConcurrecyHelperIsBlocking,
+                string concurrecyHelperConnectionString,
+                string concurrecyHelperTablePrefix,
+                bool defaultConsistencyCheckOnSave,
                 Type entryFormType,
                 object[] entryFormParameters,
                 bool displaySplashScreen,
@@ -108,6 +151,12 @@ namespace DG.UI.GHF
                 Image aboutLogo,
                 Image splashScreenLogo)
             {
+                this.isConcurrecyHelperEnabled = isConcurrecyHelperEnabled;
+                this.defaultConcurrecyHelperEnabled = defaultConcurrecyHelperEnabled;
+                this.defaultConcurrecyHelperIsBlocking = defaultConcurrecyHelperIsBlocking;
+                this.concurrecyHelperConnectionString = concurrecyHelperConnectionString;
+                this.concurrecyHelperTablePrefix = concurrecyHelperTablePrefix;
+                this.defaultConsistencyCheckOnSave = defaultConsistencyCheckOnSave;
                 this.entryFormType = entryFormType;
                 this.entryFormParameters = entryFormParameters;
                 this.displaySplashScreen = displaySplashScreen;
@@ -122,6 +171,36 @@ namespace DG.UI.GHF
                 this.splashScreenLogo = splashScreenLogo;
             }
         }
+
+        /// <summary>
+        /// Current user name
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// Check if Data Concurrency Helper is enabled
+        /// </summary>
+        public bool IsConcurrencyHelperEnabled { get; private set; }
+
+        /// <summary>
+        /// Data Concurrency Helper enabler inherited by Tab Elements
+        /// </summary>
+        public bool DefaultConcurrencyHelperEnabled { get; private set; }
+
+        /// <summary>
+        /// Data Concurrency Helper is blocking check inherited by Tab Elements
+        /// </summary>
+        public bool DefaultConcurrecyHelperIsBlocking { get; private set; }
+
+        /// <summary>
+        /// Data Concurrency Helper
+        /// </summary>
+        public DGDataConcurrencyHelper ConcurrencyHelper { get; private set; }
+
+        /// <summary>
+        /// Data consistency check On Save check inherited by Tab Elements
+        /// </summary>
+        public bool DefaultConsistencyCheckOnSave { get; private set; }
 
         /// <summary>
         /// Check if is Editing Block is enabled
@@ -232,6 +311,9 @@ namespace DG.UI.GHF
             //set application configuration
             m_applicationConfig = applicationConfig;
 
+            //generate a random username
+            UserName = Guid.NewGuid().ToString();
+
             //get app info
             AppVersion = Assembly.GetCallingAssembly().GetName().Version.ToString();
             AppName = Assembly.GetCallingAssembly().GetName().Name.ToString();
@@ -265,6 +347,20 @@ namespace DG.UI.GHF
 
             //set is editing block enabler
             IsEditingBlockEnabled = applicationConfig.isEditingBlockEnabled;
+
+            //initialize DataConcurrencyHelper
+            IsConcurrencyHelperEnabled = applicationConfig.isConcurrecyHelperEnabled;
+            DefaultConcurrencyHelperEnabled = applicationConfig.defaultConcurrecyHelperEnabled;
+            DefaultConcurrecyHelperIsBlocking = applicationConfig.defaultConcurrecyHelperIsBlocking;
+            if (DefaultConcurrencyHelperEnabled && !IsConcurrencyHelperEnabled)
+            {
+                throw new Exception("Concurrency Helper may not be disabled globally and enabled on elements.");
+            }
+            if (IsConcurrencyHelperEnabled)
+                ConcurrencyHelper = new DGDataConcurrencyHelper(applicationConfig.concurrecyHelperConnectionString, applicationConfig.concurrecyHelperTablePrefix);
+
+            //initialize consistency check
+            DefaultConsistencyCheckOnSave = applicationConfig.defaultConsistencyCheckOnSave;
 
             //set stacktracer enabler
             IsStackTracerEnabled = applicationConfig.isStackTracerEnabled;

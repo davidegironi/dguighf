@@ -4,6 +4,7 @@
 // Please refer to LICENSE file for licensing information.
 #endregion
 
+using DG.DataConcurrencyHelper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -266,6 +267,56 @@ namespace DG.UI.GHF
                 public Func<object> GetDataSourceEdit { get; set; }
 
                 /// <summary>
+                /// Check if Concurrency after check is enabled, inherited from application preference
+                /// </summary>
+                public Nullable<bool> IsConcurrencyCheckEnabled { get; set; }
+
+                /// <summary>
+                /// Check if Data Concurrency Helper is enabled, inherited from application preference
+                /// </summary>
+                public Nullable<bool> IsConcurrencyHelperEnabled { get; set; }
+
+                /// <summary>
+                /// Check if Data Concurrency Helper is blocking, inherited from application preference
+                /// </summary>
+                public Nullable<bool> IsConcurrencyHelperBlocking { get; set; }
+
+                /// <summary>
+                /// Function that returns identifier for the current record beeing edited
+                /// </summary>
+                public Func<object, Nullable<ConcurrencyHelperRecord>> GetConcurrencyHelperRecord { get; set; }
+
+                /// <summary>
+                /// Check if data consistency check is enabled on save, inherited from application preference
+                /// </summary>
+                public Nullable<bool> IsConsistencyCheckOnSaveEnabled { get; set; }
+
+                /// <summary>
+                /// Current Property values of the item being edited
+                /// </summary>
+                internal IDictionary<string, object> CurrentEditValues { get; set; }
+
+                /// <summary>
+                /// Current Property values of the item being edited
+                /// </summary>
+                public Func<IDictionary<string, object>> GetEditValues { get; set; }
+
+                /// <summary>
+                /// Current Property values of the item being edited
+                /// </summary>
+                public Func<object, IDictionary<string, object>, bool> AreEditValuesChanged { get; set; }
+
+                /// <summary>
+                /// Parse function for the property values comparer form
+                /// </summary>
+                public IDictionary<string, Func<object, string>> EditValuesViewerParseFieldValuesFunc { get; set; }
+
+                /// <summary>
+                /// Parse dictionary for the property field name comparer form
+                /// </summary>
+                public IDictionary<string, string> EditValuesViewerParseFieldNameDict { get; set; }
+
+                /// <summary>
                 /// Button used to raise the AddClick event
                 /// </summary>
                 public Control AddButton { get; set; }
@@ -366,6 +417,15 @@ namespace DG.UI.GHF
                     Remove = null;
                     AfterSaveAction = null;
                     ReloadViewAfterSave = false;
+                    IsConcurrencyHelperEnabled = null;
+                    IsConcurrencyHelperBlocking = null;
+                    GetConcurrencyHelperRecord = null;
+                    IsConsistencyCheckOnSaveEnabled = null;
+                    CurrentEditValues = null;
+                    GetEditValues = null;
+                    AreEditValuesChanged = null;
+                    EditValuesViewerParseFieldValuesFunc = null;
+                    EditValuesViewerParseFieldNameDict = null;
                 }
 
                 /// <summary>
@@ -716,6 +776,8 @@ namespace DG.UI.GHF
             Add_BindingSourceList_EventHandlers(TabElements);
             Add_TabControl_EventHandlers(TabElements);
             Add_Buttons_ClickEventHandlers(TabElements);
+            InitializeCustom_IsConcurrencyHelperEnabled(TabElements);
+            InitializeCustom_IsConsistencyCheckOnSaveEnabled(TabElements);
 
             //set language
             LanguageHelper = new DGUIGHFLanguageHelper(this);
@@ -869,6 +931,150 @@ namespace DG.UI.GHF
                     {
                         //recursive call
                         Add_Buttons_ClickEventHandlers(tabElement.ElementTabs.TabElements);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initialize tab elements currency helper
+        /// </summary>
+        /// <param name="tabElements"></param>
+        private void InitializeCustom_IsConcurrencyHelperEnabled(List<TabElement> tabElements)
+        {
+            if (tabElements != null)
+            {
+                foreach (TabElement tabElement in tabElements)
+                {
+                    if (tabElement.ElementItem != null)
+                    {
+                        if (tabElement.ElementItem.IsConcurrencyHelperEnabled == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementItem.IsConcurrencyHelperEnabled = UIGHFApplication.DefaultConcurrencyHelperEnabled;
+                        }
+                        if (tabElement.ElementItem.IsConcurrencyHelperBlocking == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementItem.IsConcurrencyHelperBlocking = UIGHFApplication.DefaultConcurrecyHelperIsBlocking;
+                        }
+                    }
+                    else if (tabElement.ElementListItem != null)
+                    {
+                        if (tabElement.ElementListItem.IsConcurrencyHelperEnabled == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementListItem.IsConcurrencyHelperEnabled = UIGHFApplication.DefaultConcurrencyHelperEnabled;
+                        }
+                        if (tabElement.ElementListItem.IsConcurrencyHelperBlocking == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementListItem.IsConcurrencyHelperBlocking = UIGHFApplication.DefaultConcurrecyHelperIsBlocking;
+                        }
+                    }
+                    else if (tabElement.ElementListTabs != null)
+                    {
+                        //recursive call
+                        InitializeCustom_IsConcurrencyHelperEnabled(tabElement.ElementListTabs.TabElements);
+                    }
+                    else if (tabElement.ElementTabs != null)
+                    {
+                        //recursive call
+                        InitializeCustom_IsConcurrencyHelperEnabled(tabElement.ElementTabs.TabElements);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initialize the tab elements data consistency consistency check
+        /// </summary>
+        /// <param name="tabElements"></param>
+        private void InitializeCustom_IsConsistencyCheckOnSaveEnabled(List<TabElement> tabElements)
+        {
+            if (tabElements != null)
+            {
+                foreach (TabElement tabElement in tabElements)
+                {
+                    if (tabElement.ElementItem != null)
+                    {
+                        if (tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled = UIGHFApplication.DefaultConsistencyCheckOnSave;
+                        }
+                    }
+                    else if (tabElement.ElementListItem != null)
+                    {
+                        if (tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled == null)
+                        {
+                            //not initialized, inherit from application global
+                            tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled = UIGHFApplication.DefaultConsistencyCheckOnSave;
+                        }
+                    }
+                    else if (tabElement.ElementListTabs != null)
+                    {
+                        //recursive call
+                        InitializeCustom_IsConsistencyCheckOnSaveEnabled(tabElement.ElementListTabs.TabElements);
+                    }
+                    else if (tabElement.ElementTabs != null)
+                    {
+                        //recursive call
+                        InitializeCustom_IsConsistencyCheckOnSaveEnabled(tabElement.ElementTabs.TabElements);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Do post initialization check tab elements
+        /// </summary>
+        /// <param name="tabElements"></param>
+        private void TabElements_PostInitializationCheck(List<TabElement> tabElements)
+        {
+            if (tabElements != null)
+            {
+                foreach (TabElement tabElement in tabElements)
+                {
+                    if (tabElement.ElementItem != null)
+                    {
+                        if ((bool)tabElement.ElementItem.IsConcurrencyHelperEnabled == true && tabElement.ElementItem.GetConcurrencyHelperRecord == null)
+                        {
+                            throw new Exception("GetConcurrencyHelperRecord method must not be null if Concurrency Helper is enabled.");
+                        }
+                        if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled && tabElement.ElementItem.GetEditValues == null)
+                        {
+                            throw new Exception("GetDataSourceEditValues method must not be null if consistency check on save is enabled.");
+                        }
+                        if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled && tabElement.ElementItem.AreEditValuesChanged == null)
+                        {
+                            throw new Exception("AreDataSourceEditValuesChanged method must not be null if consistency check on save is enabled.");
+                        }
+                    }
+                    else if (tabElement.ElementListItem != null)
+                    {
+                        if ((bool)tabElement.ElementListItem.IsConcurrencyHelperEnabled == true && tabElement.ElementListItem.GetConcurrencyHelperRecord == null)
+                        {
+                            throw new Exception("GetConcurrencyHelperRecord method must not be null.");
+                        }
+                        if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled && tabElement.ElementListItem.GetEditValues == null)
+                        {
+                            throw new Exception("GetDataSourceEditValues method must not be null if consistency check on save is enabled.");
+                        }
+                        if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled && tabElement.ElementListItem.AreEditValuesChanged == null)
+                        {
+                            throw new Exception("AreDataSourceEditValuesChanged method must not be null if consistency check on save is enabled.");
+                        }
+                    }
+                    else if (tabElement.ElementListTabs != null)
+                    {
+                        //recursive call
+                        TabElements_PostInitializationCheck(tabElement.ElementListTabs.TabElements);
+                    }
+                    else if (tabElement.ElementTabs != null)
+                    {
+                        //recursive call
+                        TabElements_PostInitializationCheck(tabElement.ElementTabs.TabElements);
                     }
                 }
             }
@@ -1049,6 +1255,17 @@ namespace DG.UI.GHF
                 {
                     datasource = tabElement.ElementListItem.GetDataSourceEdit();
                 }
+                if (datasource != null)
+                {
+                    if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled)
+                    {
+                        tabElement.ElementListItem.CurrentEditValues = tabElement.ElementListItem.GetEditValues();
+                    }
+                }
+                else
+                {
+                    tabElement.ElementListItem.CurrentEditValues = new Dictionary<string, object>();
+                }
                 SetBindingSourceDataSource(tabElement.ElementListItem.BindingSourceEdit, datasource);
                 //raise the CurrentElement changed event
                 tabElement.ElementListItem.OnBindingSourceEditChanged(new EventArgs());
@@ -1146,6 +1363,17 @@ namespace DG.UI.GHF
                         if (loaddatasource)
                         {
                             datasource = tabElement.ElementItem.GetDataSourceEdit();
+                        }
+                        if (datasource != null)
+                        {
+                            if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled)
+                            {
+                                tabElement.ElementItem.CurrentEditValues = tabElement.ElementItem.GetEditValues();
+                            }
+                        }
+                        else
+                        {
+                            tabElement.ElementItem.CurrentEditValues = new Dictionary<string, object>();
                         }
                         SetBindingSourceDataSource(tabElement.ElementItem.BindingSourceEdit, datasource);
                         //raise the CurrentElement changed event
@@ -1347,6 +1575,17 @@ namespace DG.UI.GHF
                 {
                     //load the new datasource for the CurrentElement
                     object datasource = tabElement.ElementItem.GetDataSourceEdit();
+                    if (datasource != null)
+                    {
+                        if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled)
+                        {
+                            tabElement.ElementItem.CurrentEditValues = tabElement.ElementItem.GetEditValues();
+                        }
+                    }
+                    else
+                    {
+                        tabElement.ElementItem.CurrentEditValues = new Dictionary<string, object>();
+                    }
                     SetBindingSourceDataSource(tabElement.ElementItem.BindingSourceEdit, datasource);
                     //raise the CurrentElement changed event
                     tabElement.ElementItem.OnBindingSourceEditChanged(new EventArgs());
@@ -1366,6 +1605,17 @@ namespace DG.UI.GHF
                 {
                     //load the new datasource for the CurrentElement
                     object datasource = tabElement.ElementListItem.GetDataSourceEdit();
+                    if (datasource != null)
+                    {
+                        if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled)
+                        {
+                            tabElement.ElementListItem.CurrentEditValues = tabElement.ElementListItem.GetEditValues();
+                        }
+                    }
+                    else
+                    {
+                        tabElement.ElementListItem.CurrentEditValues = new Dictionary<string, object>();
+                    }
                     SetBindingSourceDataSource(tabElement.ElementListItem.BindingSourceEdit, datasource);
                     //raise the CurrentElement changed event
                     tabElement.ElementListItem.OnBindingSourceEditChanged(new EventArgs());
@@ -1567,6 +1817,16 @@ namespace DG.UI.GHF
                 if (!tabElement.ElementItem.BindingSourceEdit.IsBindingSuspended && tabElement.ElementItem.BindingSourceEdit.Current != null)
                 {
                     elselected = true;
+
+                    //concurrency helper check
+                    if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementItem.IsConcurrencyHelperEnabled)
+                    {
+                        Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementItem.GetConcurrencyHelperRecord(tabElement.ElementItem.BindingSourceEdit.Current);
+                        if (concurrencyHelperRecord != null)
+                        {
+                            elselected = ConcurrencyCheck(tabElement, ((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                        }
+                    }
                 }
             }
             else if (tabElement.ElementListItem != null)
@@ -1574,6 +1834,16 @@ namespace DG.UI.GHF
                 if (!tabElement.ElementListItem.BindingSourceList.IsBindingSuspended && tabElement.ElementListItem.BindingSourceList.Current != null)
                 {
                     elselected = true;
+
+                    //concurrency helper check
+                    if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementListItem.IsConcurrencyHelperEnabled)
+                    {
+                        Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementListItem.GetConcurrencyHelperRecord(tabElement.ElementListItem.BindingSourceEdit.Current);
+                        if (concurrencyHelperRecord != null)
+                        {
+                            elselected = ConcurrencyCheck(tabElement, ((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                        }
+                    }
                 }
             }
             else if (tabElement.ElementListTabs != null)
@@ -1790,13 +2060,127 @@ namespace DG.UI.GHF
             {
                 try
                 {
+                    bool dosave = true;
+
                     if (tabElement.ElementItem != null)
                     {
-                        tabElement.ElementItem.Update(item);
+                        //check data consistency
+                        if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled)
+                        {
+                            if (tabElement.ElementItem.AreEditValuesChanged(item, tabElement.ElementItem.CurrentEditValues))
+                            {
+                                DialogResult formDataConsistencyViewerResult = new DGUIGHFFormDataConsistencyViewer(tabElement.ElementItem.CurrentEditValues, tabElement.ElementItem.GetEditValues(), tabElement.ElementItem.EditValuesViewerParseFieldValuesFunc, tabElement.ElementItem.EditValuesViewerParseFieldNameDict, languageBase).ShowDialog(this);
+                                if (formDataConsistencyViewerResult == DialogResult.Retry)
+                                {
+                                    //reload the item
+                                    //load the new datasource for the CurrentElement
+                                    object datasource = tabElement.ElementItem.GetDataSourceEdit();
+                                    if (datasource != null)
+                                    {
+                                        if ((bool)tabElement.ElementItem.IsConsistencyCheckOnSaveEnabled)
+                                        {
+                                            tabElement.ElementItem.CurrentEditValues = tabElement.ElementItem.GetEditValues();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tabElement.ElementItem.CurrentEditValues = new Dictionary<string, object>();
+                                    }
+                                    SetBindingSourceDataSource(tabElement.ElementItem.BindingSourceEdit, datasource);
+                                    //raise the CurrentElement changed event
+                                    tabElement.ElementItem.OnBindingSourceEditChanged(new EventArgs());
+
+                                    dosave = false;
+                                }
+                                else if (formDataConsistencyViewerResult == DialogResult.Ignore)
+                                {
+                                    dosave = true;
+                                }
+                                else
+                                {
+                                    dosave = false;
+                                }
+                            }
+                        }
+
+                        if (dosave)
+                        {
+                            tabElement.ElementItem.Update(item);
+
+                            //concurrency helper reset
+                            if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementItem.IsConcurrencyHelperEnabled)
+                            {
+                                Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementItem.GetConcurrencyHelperRecord(tabElement.ElementItem.BindingSourceEdit.Current);
+                                if (concurrencyHelperRecord != null)
+                                {
+                                    ConcurrencyReset(((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else if (tabElement.ElementListItem != null)
                     {
-                        tabElement.ElementListItem.Update(item);
+                        //check data consistency
+                        if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled)
+                        {
+                            if (tabElement.ElementListItem.AreEditValuesChanged(item, tabElement.ElementListItem.CurrentEditValues))
+                            {
+                                DialogResult formDataConsistencyViewerResult = new DGUIGHFFormDataConsistencyViewer(tabElement.ElementListItem.CurrentEditValues, tabElement.ElementListItem.GetEditValues(), tabElement.ElementListItem.EditValuesViewerParseFieldValuesFunc, tabElement.ElementListItem.EditValuesViewerParseFieldNameDict, languageBase).ShowDialog(this);
+                                if (formDataConsistencyViewerResult == DialogResult.Retry)
+                                {
+                                    //reload the item
+                                    //load the new datasource for the CurrentElement
+                                    object datasource = tabElement.ElementListItem.GetDataSourceEdit();
+                                    if (datasource != null)
+                                    {
+                                        if ((bool)tabElement.ElementListItem.IsConsistencyCheckOnSaveEnabled)
+                                        {
+                                            tabElement.ElementListItem.CurrentEditValues = tabElement.ElementListItem.GetEditValues();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tabElement.ElementListItem.CurrentEditValues = new Dictionary<string, object>();
+                                    }
+                                    SetBindingSourceDataSource(tabElement.ElementListItem.BindingSourceEdit, datasource);
+                                    //raise the CurrentElement changed event
+                                    tabElement.ElementListItem.OnBindingSourceEditChanged(new EventArgs());
+
+                                    dosave = false;
+                                }
+                                else if (formDataConsistencyViewerResult == DialogResult.Ignore)
+                                {
+                                    dosave = true;
+                                }
+                                else
+                                {
+                                    dosave = false;
+                                }
+                            }
+                        }
+
+                        if (dosave)
+                        {
+                            tabElement.ElementListItem.Update(item);
+
+                            //concurrency helper reset
+                            if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementListItem.IsConcurrencyHelperEnabled)
+                            {
+                                Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementListItem.GetConcurrencyHelperRecord(tabElement.ElementListItem.BindingSourceEdit.Current);
+                                if (concurrencyHelperRecord != null)
+                                {
+                                    ConcurrencyReset(((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else if (tabElement.ElementListTabs != null)
                     { }
@@ -1897,10 +2281,30 @@ namespace DG.UI.GHF
             if (tabElement.ElementItem != null)
             {
                 tabElement.ElementItem.BindingSourceEdit.CancelEdit();
+
+                //concurrency helper reset
+                if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementItem.IsConcurrencyHelperEnabled)
+                {
+                    Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementItem.GetConcurrencyHelperRecord(tabElement.ElementItem.BindingSourceEdit.Current);
+                    if (concurrencyHelperRecord != null)
+                    {
+                        ConcurrencyReset(((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                    }
+                }
             }
             else if (tabElement.ElementListItem != null)
             {
                 tabElement.ElementListItem.BindingSourceEdit.CancelEdit();
+
+                //concurrency helper reset
+                if (UIGHFApplication.IsConcurrencyHelperEnabled && (bool)tabElement.ElementListItem.IsConcurrencyHelperEnabled)
+                {
+                    Nullable<ConcurrencyHelperRecord> concurrencyHelperRecord = tabElement.ElementListItem.GetConcurrencyHelperRecord(tabElement.ElementListItem.BindingSourceEdit.Current);
+                    if (concurrencyHelperRecord != null)
+                    {
+                        ConcurrencyReset(((ConcurrencyHelperRecord)concurrencyHelperRecord).database, ((ConcurrencyHelperRecord)concurrencyHelperRecord).table, ((ConcurrencyHelperRecord)concurrencyHelperRecord).recordId);
+                    }
+                }
             }
             else if (tabElement.ElementListTabs != null)
             { }
@@ -2335,6 +2739,88 @@ namespace DG.UI.GHF
         }
 
         #endregion
+
+
+        #region Concurrency helper
+
+        /// <summary>
+        /// Check concurrency connection status
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="table"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        private bool ConcurrencyCheck(TabElement tabElement, string database, string table, string record)
+        {
+            bool ret = false;
+            Nullable<DGDataConcurrencyHelper.Status> concurrencyStatus = UIGHFApplication.ConcurrencyHelper.GetStatus(database, table, record);
+            if (concurrencyStatus != null)
+            {
+                if ((DGDataConcurrencyHelper.Status)concurrencyStatus == DGDataConcurrencyHelper.Status.Editing)
+                {
+                    bool isblocking = false;
+                    if (tabElement.ElementItem != null)
+                    {
+                        isblocking = (bool)tabElement.ElementItem.IsConcurrencyHelperBlocking;
+                    }
+                    else if (tabElement.ElementListItem != null)
+                    {
+                        isblocking = (bool)tabElement.ElementListItem.IsConcurrencyHelperBlocking;
+                    }
+                    else if (tabElement.ElementListTabs != null)
+                    { }
+                    else if (tabElement.ElementTabs != null)
+                    { }
+                    DG.DataConcurrencyHelper.Objects.ConcurrencyRecord concurrencyRecord = UIGHFApplication.ConcurrencyHelper.Find(database, table, record);
+                    string concurrencyNonBlockingQuestionText = languageBase.formConcurrencyNonBlockingQuestionText;
+                    if (concurrencyRecord != null)
+                    {
+                        concurrencyNonBlockingQuestionText = String.Format(languageBase.formConcurrencyUserNonBlockingQuestionText, concurrencyRecord.Logusername);
+                    }
+                    string concurrencyBlockingQuestionText = languageBase.formConcurrencyBlockingQuestionText;
+                    if (concurrencyRecord != null)
+                    {
+                        concurrencyBlockingQuestionText = String.Format(languageBase.formConcurrencyUserBlockingQuestionText, concurrencyRecord.Logusername);
+                    }
+                    if (!isblocking)
+                    {
+                        if (MessageBox.Show(concurrencyNonBlockingQuestionText, languageBase.formConcurrencyMessageBoxTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                        {
+                            ret = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(concurrencyBlockingQuestionText, languageBase.formConcurrencyMessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+            }
+            else
+            {
+                ret = true;
+            }
+            if (ret)
+            {
+                UIGHFApplication.ConcurrencyHelper.SetStatus(database, table, record, UIGHFApplication.AppName, UIGHFApplication.UserName, DGDataConcurrencyHelper.Status.Editing);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Reset concurrency connection status
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="table"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        private bool ConcurrencyReset(string database, string table, string record)
+        {
+            return UIGHFApplication.ConcurrencyHelper.ResetStatus(database, table, record);
+        }
+
+        #endregion
+
+
 
     }
 

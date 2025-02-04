@@ -1,4 +1,10 @@
-﻿namespace DG.UIGHFSample
+﻿#if NETFRAMEWORK
+using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
+
+namespace DG.UIGHFSample
 {
     partial class FormBlogs
     {
@@ -367,7 +373,7 @@
             // 
             // blogsBindingSource
             // 
-            this.blogsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.blogs);
+            this.blogsBindingSource.DataSource = typeof(blogs);
             // 
             // blogs_descriptionTextBox
             // 
@@ -532,7 +538,7 @@
             // 
             // postsBindingSource
             // 
-            this.postsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.posts);
+            this.postsBindingSource.DataSource = typeof(posts);
             // 
             // posts_textTextBox
             // 
@@ -683,7 +689,7 @@
             // 
             // commentsBindingSource
             // 
-            this.commentsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.comments);
+            this.commentsBindingSource.DataSource = typeof(comments);
             // 
             // comments_emailTextBox
             // 
@@ -799,7 +805,7 @@
             // 
             // commentsusefulBindingSource
             // 
-            this.commentsusefulBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.commentsuseful);
+            this.commentsusefulBindingSource.DataSource = typeof(commentsuseful);
             this.commentsusefulBindingSource.CurrentChanged += new System.EventHandler(this.commentsusefulBindingSource_CurrentChanged);
             // 
             // panel_tabPostslist_tabCommentslist_tabCommentsuseful_actions

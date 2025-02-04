@@ -45,7 +45,7 @@ namespace DG.UI.GHF
 
             this._buttons = buttons;
 
-            pictureBox1.Image = (Image)SystemIcons.Exclamation.ToBitmap();
+            pictureBox1.Image = global::DG.UI.GHF.Properties.Resources.systemicon_exclamation;
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
 
             if (this._buttons == Buttons.OK)

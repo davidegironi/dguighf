@@ -1,4 +1,10 @@
-﻿namespace DG.UIGHFSample
+﻿#if NETFRAMEWORK
+using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
+
+namespace DG.UIGHFSample
 {
     partial class FormTags
     {
@@ -187,7 +193,7 @@
             // 
             // tagsBindingSource
             // 
-            this.tagsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.tags);
+            this.tagsBindingSource.DataSource = typeof(tags);
             // 
             // panel_list
             // 

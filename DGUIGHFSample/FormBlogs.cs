@@ -3,7 +3,11 @@
 using DG.Data.Model.Helpers;
 using DG.UI.GHF;
 using DG.UIGHFSample.Model;
+#if NETFRAMEWORK
 using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
 using DG.UIGHFSample.Objects.View;
 using System;
 using System.Collections.Generic;

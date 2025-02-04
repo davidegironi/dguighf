@@ -6,7 +6,7 @@ $solutionName = "DGUIGHF"
 $versionMajor = "1"
 $versionMinor = "2"
 $versionBuild = GetVersionBuild
-$versionRevision = "17"
+$versionRevision = "18"
 #build version number
 $version = GetVersion $versionMajor $versionMinor $versionBuild $versionRevision
 
@@ -81,7 +81,7 @@ $builds = @(
 				Cmd = "xcopy ..\..\_DBDump\* Working\Src\_DBDump\ /s /e /y"
 			}
 		);
-		#commands to run before packaging of the release source
+		#commands to run before packaging of the release binary
 		ReleaseBinCmd = @();
 	};
 )

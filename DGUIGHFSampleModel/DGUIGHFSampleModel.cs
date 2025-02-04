@@ -1,6 +1,15 @@
 ﻿using DG.Data.Model;
+#if NETFRAMEWORK
 using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Context;
+#endif
 using System;
+#if !NETFRAMEWORK
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+#endif
 
 namespace DG.UIGHFSample.Model
 {
@@ -23,7 +32,7 @@ namespace DG.UIGHFSample.Model
         public DGUIGHFSampleModel()
             : base()
         {
-            Type contextType = typeof(dguighftestEntities);
+            Type contextType = typeof(dguighfsamplemodelContext);
             object[] contextParameters = null;
 
             Initialize(contextType, contextParameters);

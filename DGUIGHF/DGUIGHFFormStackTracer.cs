@@ -39,7 +39,7 @@ namespace DG.UI.GHF
         {
             InitializeComponent();
 
-            pictureBox1.Image = (Image)SystemIcons.Error.ToBitmap();
+            pictureBox1.Image = global::DG.UI.GHF.Properties.Resources.systemicon_error;
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
 
             this.m_ex = ex;

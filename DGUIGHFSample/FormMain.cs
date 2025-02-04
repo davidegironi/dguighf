@@ -13,6 +13,8 @@ namespace DG.UIGHFSample
             InitializeComponent();
 
             Initialize(Program.uighfApplication);
+
+            Program.uighfApplication.UserName = "test user";
         }
 
         public override void AddLanguageComponents()

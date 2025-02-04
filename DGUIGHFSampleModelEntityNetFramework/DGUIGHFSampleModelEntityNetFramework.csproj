@@ -9,9 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DG.UIGHFSample.Model.Entity</RootNamespace>
     <AssemblyName>DGUIGHFSampleModelEntityNetFramework</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,13 +33,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -50,77 +55,76 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="blogs.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Update="comments.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Update="commentsuseful.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
-    <Compile Update="Model_dguighftest.Context.cs">
+    <Compile Update="Model_dguighfsamplemodel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.Context.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Update="Model_dguighftest.cs">
+    <Compile Update="Model_dguighfsamplemodel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
-    <Compile Update="Model_dguighftest.Designer.cs">
+    <Compile Update="Model_dguighfsamplemodel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
     </Compile>
     <Compile Update="posts.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Update="postsadditionals.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Update="poststotags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Update="tags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="blogs.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="comments.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="commentsuseful.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_dguighftest.Context.cs">
+    <Compile Include="Model_dguighfsamplemodel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.Context.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_dguighftest.cs" />
-    <Compile Include="Model_dguighftest.Designer.cs">
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
+    <Compile Include="Model_dguighfsamplemodel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model_dguighftest2.cs">
+    <Compile Include="Model_dguighfsamplemodel.Designer.cs">
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
     </Compile>
     <Compile Include="posts.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="postsadditionals.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="poststotags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
     <Compile Include="tags.cs">
-      <DependentUpon>Model_dguighftest.tt</DependentUpon>
+      <DependentUpon>Model_dguighfsamplemodel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -130,38 +134,39 @@
     <None Update="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
-    <None Update="Model_dguighftest.Context.tt">
+    <None Update="Model_dguighfsamplemodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest.Context.cs</LastGenOutput>
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
+      <LastGenOutput>Model_dguighfsamplemodel.Context.cs</LastGenOutput>
     </None>
-    <None Update="Model_dguighftest.edmx.diagram">
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
+    <None Update="Model_dguighfsamplemodel.edmx.diagram">
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
     </None>
-    <None Update="Model_dguighftest.tt">
+    <None Update="Model_dguighfsamplemodel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest.cs</LastGenOutput>
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
+      <LastGenOutput>Model_dguighfsamplemodel.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="Model_dguighftest.edmx">
+    <EntityDeploy Include="Model_dguighfsamplemodel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model_dguighftest.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model_dguighfsamplemodel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.config" />
-    <None Include="Model_dguighftest.edmx.diagram">
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
+    <None Include="Model_dguighfsamplemodel.edmx.diagram">
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model_dguighftest.Context.tt">
+    <Content Include="Model_dguighfsamplemodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest.Context.cs</LastGenOutput>
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
+      <LastGenOutput>Model_dguighfsamplemodel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model_dguighftest.tt">
+    <Content Include="Model_dguighfsamplemodel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model_dguighftest.edmx</DependentUpon>
-      <LastGenOutput>Model_dguighftest2.cs</LastGenOutput>
+      <DependentUpon>Model_dguighfsamplemodel.edmx</DependentUpon>
+      <LastGenOutput>Model_dguighfsamplemodel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

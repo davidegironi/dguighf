@@ -1,5 +1,5 @@
 ﻿#-------------------------------------
-# AutoBuild 1.0.2.2
+# AutoBuild 1.0.2.3
 # Copyright (c) 2012 Davide Gironi
 #
 # a Build automation script that runs on psake (https://github.com/psake/psake)
@@ -266,7 +266,7 @@ task ReleaseBin -depends CleanWorking, UpdateVersion, Build {
 			}
 			
 			#check if is SDK project
-			$isSdk = Select-String -Path "$sourceDir\$projectFile" -Pattern '<Project Sdk="Microsoft.NET.Sdk">' -SimpleMatch -Quiet
+			$isSdk = Select-String -Path "$sourceDir\$projectFile" -Pattern 'Microsoft.NET.Sdk' -SimpleMatch -Quiet
 			
 			#copy project release files
 			robocopy @("$projectDirectory\bin\Release", "$workingDir\Bin\$projectName", '*.*', '/S', '/NP', '/XO', '/XF', '*.pdb', '*.xml') | Out-Default
@@ -479,13 +479,37 @@ task Test -depends Build {
 			$projectDirectoryFileInfo = Get-ChildItem "$sourceDir\$projectFile"
 			$projectDirectory = $projectDirectoryFileInfo.DirectoryName
 			
-			ForEach ($test in $tests)
+			#check if is SDK project
+			$isSdk = Select-String -Path "$sourceDir\$projectFile" -Pattern 'Microsoft.NET.Sdk' -SimpleMatch -Quiet
+			
+			if($isSdk)
 			{
-				if ($projectName -eq $test.Name)
+				ForEach ($test in $tests)
 				{
-					Write-Host -ForegroundColor Green "Running tests " $test.Name
-										
-					exec { dotnet test "$sourceDir\$projectFile" -c "Release" | Out-Default }
+					$targetFrameworks = GetTargetFrameworks($projectDirectoryFileInfo)
+					if ($projectName -eq $test.Name)
+					{
+						ForEach($targetFramework in $targetFrameworks)
+						{	
+							$targetFrameworkName = $targetFramework.Name
+							
+							Write-Host -ForegroundColor Green "Running tests " $test.Name " on " $targetFrameworkName
+											
+							exec { dotnet test "$sourceDir\$projectFile" -c "Release" -f "$targetFrameworkName" | Out-Default }
+						}
+					}
+				}
+			}
+			else
+			{
+				ForEach ($test in $tests)
+				{
+					if ($projectName -eq $test.Name)
+					{
+						Write-Host -ForegroundColor Green "Running tests " $test.Name
+											
+						exec { dotnet test "$sourceDir\$projectFile" -c "Release" | Out-Default }
+					}
 				}
 			}
 		}
@@ -516,6 +540,21 @@ function GetProjects($solutionPath) {
 			}
 		}
 
+	return $results
+}
+
+#get project targetframeworks
+function GetTargetFrameworks($projectPath) {
+	$results = @()
+	[xml]$projectPathXml = Get-Content -Path $projectPath
+	$targetFrameworks = $projectPathXml.Project.PropertyGroup.TargetFrameworks
+	if ($targetFrameworks) {
+		$frameworks = $targetFrameworks -split ';'
+		foreach ($framework in $frameworks) {
+			$results += New-Object PSObject -Property @{ Name = $framework }
+		}
+	}
+	
 	return $results
 }
 

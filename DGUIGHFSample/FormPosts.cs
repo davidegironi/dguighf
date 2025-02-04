@@ -1,7 +1,11 @@
 ﻿using DG.Data.Model.Helpers;
 using DG.UI.GHF;
 using DG.UIGHFSample.Model;
+#if NETFRAMEWORK
 using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
 using DG.UIGHFSample.Objects.View;
 using System;
 using System.Collections.Generic;
@@ -137,6 +141,21 @@ namespace DG.UIGHFSample
                     GetDataSourceEdit = GetDataSourceEdit_tabPosts,
                     AfterSaveAction = AfterSaveAction_tabPosts,
 
+                    IsConcurrencyHelperEnabled = true,
+                    GetConcurrencyHelperRecord = GetConcurrencyHelperRecord_tabPosts,
+
+                    IsConsistencyCheckOnSaveEnabled = true,
+                    GetEditValues = GetDataSourceEditValues_tabPosts,
+                    AreEditValuesChanged = AreDataSourceEditValuesChanged_tabPosts,
+                    EditValuesViewerParseFieldValuesFunc = new Dictionary<string, Func<object, string>>()
+                        {
+                            { "blogs_id", delegate(object o) { return samplemodel.Blogs.Find(int.Parse(o.ToString())).blogs_title; } }
+                        },
+                    EditValuesViewerParseFieldNameDict = new Dictionary<string, string>()
+                        {
+                            { "blogs_id", "Blog" }
+                        },
+
                     AddButton = button_tabPosts_new,
                     UpdateButton = button_tabPosts_edit,
                     RemoveButton = button_tabPosts_delete,
@@ -269,6 +288,30 @@ namespace DG.UIGHFSample
                 Console.WriteLine("AfterSaveAction_tabPosts");
 
             DGUIGHFData.SetBindingSourcePosition<posts, DGUIGHFSampleModel>(samplemodel.Posts, item, vPostsBindingSource);
+        }
+
+        private Nullable<ConcurrencyHelperRecord> GetConcurrencyHelperRecord_tabPosts(object item)
+        {
+            if (_debug)
+                Console.WriteLine("GetConcurrencyHelperRecord_tabPosts");
+
+            return DGUIGHFData.GetConcurrencyHelperRecord<posts, DGUIGHFSampleModel>(samplemodel.Posts, item);
+        }
+
+        private IDictionary<string, object> GetDataSourceEditValues_tabPosts()
+        {
+            if (_debug)
+                Console.WriteLine("GetDataSourceEditValues_tabPosts");
+
+            return DGUIGHFData.LoadPropertyValuesFromCurrentBindingSource<posts, DGUIGHFSampleModel>(samplemodel.Posts, vPostsBindingSource, new string[] { "posts_id" });
+        }
+
+        private bool AreDataSourceEditValuesChanged_tabPosts(object item, IDictionary<string, object> values)
+        {
+            if (_debug)
+                Console.WriteLine("AreDataSourceEditValuesChanged_tabPosts");
+
+            return DGUIGHFData.ArePropertyValuesChanged<posts, DGUIGHFSampleModel>(samplemodel.Posts, item, values);
         }
 
         private void Add_tabPosts(object item)

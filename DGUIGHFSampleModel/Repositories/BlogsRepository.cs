@@ -1,7 +1,11 @@
-﻿using System.Linq;
-using DG.Data.Model;
+﻿using DG.Data.Model;
+#if NETFRAMEWORK
 using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
 using System;
+using System.Linq;
 
 namespace DG.UIGHFSample.Model
 {
@@ -27,7 +31,7 @@ namespace DG.UIGHFSample.Model
 
             foreach (blogs item in items)
             {
-                if(String.IsNullOrEmpty(item.blogs_title))
+                if (String.IsNullOrEmpty(item.blogs_title))
                 {
                     ret = false;
                     errors = errors.Concat(new string[] { language.blogRepositoryE001 }).ToArray();

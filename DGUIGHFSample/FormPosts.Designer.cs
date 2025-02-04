@@ -1,4 +1,10 @@
-﻿namespace DG.UIGHFSample
+﻿#if NETFRAMEWORK
+using DG.UIGHFSample.Model.Entity;
+#else
+using DG.UIGHFSample.Model.Entity.Models;
+#endif
+
+namespace DG.UIGHFSample
 {
     partial class FormPosts
     {
@@ -249,7 +255,7 @@
             // 
             // postsBindingSource
             // 
-            this.postsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.posts);
+            this.postsBindingSource.DataSource = typeof(posts);
             // 
             // vCBlogsBindingSource
             // 
@@ -444,7 +450,7 @@
             // 
             // postsadditionalsBindingSource
             // 
-            this.postsadditionalsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.postsadditionals);
+            this.postsadditionalsBindingSource.DataSource = typeof(postsadditionals);
             // 
             // panel_tabPostsextra_tabPostsadditionals_actions
             // 
@@ -719,7 +725,7 @@
             // 
             // poststotagsBindingSource
             // 
-            this.poststotagsBindingSource.DataSource = typeof(DG.UIGHFSample.Model.Entity.poststotags);
+            this.poststotagsBindingSource.DataSource = typeof(poststotags);
             // 
             // FormPosts
             // 
