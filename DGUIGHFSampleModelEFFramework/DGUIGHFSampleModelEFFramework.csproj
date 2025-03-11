@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DG.UIGHFSample.Model.Entity</RootNamespace>
-    <AssemblyName>DGUIGHFSampleModelEntityNetFramework</AssemblyName>
+    <AssemblyName>DGUIGHFSampleModelEFFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -7,7 +7,7 @@ call config.update-dbmodel-secret.bat
 rem Configuration string
 set CONFIGSTRING=%CONFIGSTRINGSECRET%
 rem Project path
-set PROJECT=..\DGUIGHFSampleModelEntityNetCore.csproj
+set PROJECT=..\DGUIGHFSampleModelEFCore.csproj
 rem Set the database name
 set DATABASE=dguighfsamplemodel
 rem Set the context name
