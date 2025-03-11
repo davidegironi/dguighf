@@ -45,10 +45,10 @@ $builds = @(
 				Name = "DGUIGHFSampleModel";
 			},
 			@{
-				Name = "DGUIGHFSampleModelEntityNetCore";
+				Name = "DGUIGHFSampleModelEFCore";
 			},
 			@{
-				Name = "DGUIGHFSampleModelEntityNetFramework";
+				Name = "DGUIGHFSampleModelEFFramework";
 			}
 		);
 		#files to include in the release binary package
