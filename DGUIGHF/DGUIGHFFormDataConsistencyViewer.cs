@@ -1,6 +1,5 @@
 ﻿#region License
-// Copyright (c) 2014 AvioBrain
-//                    Davide Gironi
+// Copyright (c) 2014 Davide Gironi
 //
 // Please refer to LICENSE file for licensing information.
 #endregion
@@ -88,7 +87,7 @@ namespace DG.UI.GHF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ABUIGHFFormDataConsistencyViewer_Load(object sender, EventArgs e)
+        private void DGUIGHFFormDataConsistencyViewer_Load(object sender, EventArgs e)
         {
             this.Text = languageBase.dataConsistencyViewerTitle;
             label_info.Text = languageBase.dataConsistencyViewerInfoLabel;

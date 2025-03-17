@@ -209,7 +209,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Data Consistency Comparer";
-            this.Load += new System.EventHandler(this.ABUIGHFFormDataConsistencyViewer_Load);
+            this.Load += new System.EventHandler(this.DGUIGHFFormDataConsistencyViewer_Load);
             this.panel_details.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_columns)).EndInit();
             this.panel2.ResumeLayout(false);
