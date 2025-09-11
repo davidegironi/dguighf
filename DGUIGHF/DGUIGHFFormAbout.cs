@@ -116,7 +116,15 @@ namespace DG.UI.GHF
         /// <param name="e"></param>
         private void label_weblink_Click(object sender, EventArgs e)
         {
+#if NETFRAMEWORK
             System.Diagnostics.Process.Start(appWeblink);
+#else
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = appWeblink,
+                UseShellExecute = true
+            });
+#endif
         }
     }
 }

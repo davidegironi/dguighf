@@ -3,7 +3,7 @@
     <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <NoWarn>$(NoWarn);CS8981</NoWarn>
     <RootNamespace>DG.UIGHFSample.Model</RootNamespace>
-    <Version>1.2.30204.18</Version>
+    <Version>1.2.30911.19</Version>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />

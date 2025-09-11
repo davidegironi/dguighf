@@ -6,7 +6,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Version>1.2.30204.18</Version>
+    <Version>1.2.30911.19</Version>
     <Title>DGUIGHF Sample</Title>
     <Product>DGUIGHF Sample</Product>
     <Authors>Davide Gironi</Authors>
